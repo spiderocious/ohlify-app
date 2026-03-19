@@ -10,15 +10,17 @@ class AppFeedbackModal extends StatelessWidget {
     super.key,
     required this.entry,
     required this.onDismiss,
+    this.isFullscreen = false,
   });
 
   final FeedbackModalEntry entry;
   final VoidCallback onDismiss;
+  final bool isFullscreen;
 
   // ── Icon circle config per kind ───────────────────────────────────────────
 
   static const _circleColors = {
-    ModalFeedbackKind.success: Color(0xFFDCFCE7), // light green ring bg
+    ModalFeedbackKind.success: Color(0xFFDCFCE7),
     ModalFeedbackKind.error: Color(0xFFFEE2E2),
     ModalFeedbackKind.warning: Color(0xFFFFF7ED),
     ModalFeedbackKind.info: Color(0xFFEFF6FF),
@@ -38,28 +40,33 @@ class AppFeedbackModal extends StatelessWidget {
     ModalFeedbackKind.info: Icons.info_outline_rounded,
   };
 
+  Widget _buildIconCircle(ModalFeedbackKind kind) {
+    final borderColor = _circleBorderColors[kind]!;
+    final circleBg = _circleColors[kind]!;
+    return Container(
+      width: 80,
+      height: 80,
+      decoration: BoxDecoration(
+        color: circleBg,
+        shape: BoxShape.circle,
+        border: Border.all(color: borderColor, width: 3),
+      ),
+      child: Icon(_defaultIcons[kind]!, size: 36, color: borderColor),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final opts = entry.options;
-    final kind = opts.kind;
-    final borderColor = _circleBorderColors[kind]!;
-    final circleBg = _circleColors[kind]!;
+    final iconWidget = opts.icon ?? _buildIconCircle(opts.kind);
 
-    final iconWidget = opts.icon ??
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            color: circleBg,
-            shape: BoxShape.circle,
-            border: Border.all(color: borderColor, width: 3),
-          ),
-          child: Icon(
-            _defaultIcons[kind]!,
-            size: 36,
-            color: borderColor,
-          ),
-        );
+    if (isFullscreen) {
+      return _FullscreenFeedback(
+        entry: entry,
+        onDismiss: onDismiss,
+        iconWidget: iconWidget,
+      );
+    }
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -132,6 +139,110 @@ class AppFeedbackModal extends StatelessWidget {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+class _FullscreenFeedback extends StatelessWidget {
+  const _FullscreenFeedback({
+    required this.entry,
+    required this.onDismiss,
+    required this.iconWidget,
+  });
+
+  final FeedbackModalEntry entry;
+  final VoidCallback onDismiss;
+  final Widget iconWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    final opts = entry.options;
+
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: AppColors.background,
+      child: SafeArea(
+        child: Stack(
+          children: [
+            // Close button — pinned top-right
+            if (opts.showCloseButton)
+              Positioned(
+                top: 16,
+                right: 24,
+                child: GestureDetector(
+                  onTap: onDismiss,
+                  child: const Icon(
+                    Icons.close_rounded,
+                    size: 24,
+                    color: AppColors.textMuted,
+                  ),
+                ),
+              ),
+
+            // Centered content
+            Positioned.fill(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  iconWidget,
+                  const SizedBox(height: 24),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: AppText(
+                      entry.title,
+                      variant: AppTextVariant.medium,
+                      align: TextAlign.center,
+                      weight: FontWeight.w700,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32),
+                    child: AppText(
+                      entry.message,
+                      variant: AppTextVariant.body,
+                      color: AppColors.textMuted,
+                      align: TextAlign.center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Button pinned to bottom
+            Positioned(
+              left: 24,
+              right: 24,
+              bottom: 24,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AppButton(
+                    label: opts.confirmButtonText,
+                    expanded: true,
+                    radius: 100,
+                    onPressed: onDismiss,
+                  ),
+                  if (opts.actionLabel != null) ...[
+                    const SizedBox(height: 10),
+                    AppButton(
+                      label: opts.actionLabel!,
+                      variant: AppButtonVariant.plain,
+                      expanded: true,
+                      radius: 100,
+                      onPressed: () {
+                        opts.onAction?.call();
+                        onDismiss();
+                      },
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

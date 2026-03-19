@@ -31,23 +31,36 @@ class _ModalStack extends StatelessWidget {
     final entry = notifier.current;
     if (entry == null) return const SizedBox.shrink();
 
-    // Resolve position
     final position = _positionOf(entry);
     final barrierColor = _barrierColorOf(entry) ?? Colors.black54;
     final dismissible = _dismissibleOf(entry);
+    final isFullscreen = position == ModalPosition.fullscreen;
 
     void dismiss() => notifier.dismiss(entry.id);
 
-    final modalWidget = _buildModal(entry, dismiss);
+    final modalWidget = _buildModal(entry, dismiss, isFullscreen: isFullscreen);
 
-    final alignment = switch (position) {
-      ModalPosition.top => Alignment.topCenter,
-      ModalPosition.bottom => Alignment.bottomCenter,
-      ModalPosition.center => Alignment.center,
-    };
+    Widget body;
 
-    return Positioned.fill(
-      child: _AnimatedModal(
+    if (isFullscreen) {
+      // Fullscreen: modal fills the whole screen, no scrim tap-to-dismiss
+      body = _AnimatedModal(
+        key: ValueKey(entry.id),
+        position: position,
+        child: Material(
+          color: Colors.transparent,
+          child: modalWidget,
+        ),
+      );
+    } else {
+      final alignment = switch (position) {
+        ModalPosition.top => Alignment.topCenter,
+        ModalPosition.bottom => Alignment.bottomCenter,
+        ModalPosition.center => Alignment.center,
+        ModalPosition.fullscreen => Alignment.center,
+      };
+
+      body = _AnimatedModal(
         key: ValueKey(entry.id),
         position: position,
         child: GestureDetector(
@@ -63,15 +76,28 @@ class _ModalStack extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.only(
-                      bottom: MediaQuery.viewInsetsOf(context).bottom,
+                      bottom: position == ModalPosition.bottom
+                          ? 20 + MediaQuery.viewInsetsOf(context).bottom
+                          : MediaQuery.viewInsetsOf(context).bottom,
                     ),
-                    child: modalWidget,
+                    child: Material(
+                      color: Colors.transparent,
+                      child: modalWidget,
+                    ),
                   ),
                 ),
               ),
             ),
           ),
         ),
+      );
+    }
+
+    return Positioned.fill(
+      child: Overlay(
+        initialEntries: [
+          OverlayEntry(builder: (_) => body),
+        ],
       ),
     );
   }
@@ -97,14 +123,18 @@ class _ModalStack extends StatelessWidget {
         _ => true,
       };
 
-  Widget _buildModal(ModalEntry entry, VoidCallback onDismiss) {
+  Widget _buildModal(
+    ModalEntry entry,
+    VoidCallback onDismiss, {
+    required bool isFullscreen,
+  }) {
     return switch (entry) {
       final FeedbackModalEntry e =>
-        AppFeedbackModal(entry: e, onDismiss: onDismiss),
+        AppFeedbackModal(entry: e, onDismiss: onDismiss, isFullscreen: isFullscreen),
       final ConfirmationModalEntry e =>
-        AppConfirmationModal(entry: e, onDismiss: onDismiss),
+        AppConfirmationModal(entry: e, onDismiss: onDismiss, isFullscreen: isFullscreen),
       final InputModalEntry e =>
-        AppInputModal(entry: e, onDismiss: onDismiss),
+        AppInputModal(entry: e, onDismiss: onDismiss, isFullscreen: isFullscreen),
       _ => const SizedBox.shrink(),
     };
   }
@@ -141,11 +171,12 @@ class _AnimatedModalState extends State<_AnimatedModal>
     );
     _fade = CurvedAnimation(parent: _ctrl, curve: Curves.easeOut);
 
-    // Bottom modals slide up, top slide down, center scale up slightly
+    // Fullscreen slides up from bottom like a sheet
     final begin = switch (widget.position) {
       ModalPosition.bottom => const Offset(0, 0.15),
       ModalPosition.top => const Offset(0, -0.15),
       ModalPosition.center => const Offset(0, 0.06),
+      ModalPosition.fullscreen => const Offset(0, 1.0),
     };
 
     _slide = Tween<Offset>(begin: begin, end: Offset.zero)

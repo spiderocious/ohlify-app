@@ -8,7 +8,9 @@ enum ModalType { feedback, confirmation, input }
 
 enum ModalFeedbackKind { success, error, warning, info }
 
-enum ModalPosition { center, top, bottom }
+enum ModalConfirmationKind { neutral, success, error, warning, info }
+
+enum ModalPosition { center, top, bottom, fullscreen }
 
 // ── Options ───────────────────────────────────────────────────────────────────
 
@@ -52,6 +54,7 @@ class FeedbackModalOptions {
 
 class ConfirmationModalOptions {
   const ConfirmationModalOptions({
+    this.kind = ModalConfirmationKind.neutral,
     this.confirmButtonText = 'Confirm',
     this.cancelButtonText = 'Cancel',
     this.onConfirm,
@@ -60,11 +63,16 @@ class ConfirmationModalOptions {
     this.dismissible = true,
     this.showCloseButton = true,
     this.showCancelButton = true,
+    this.showIcon = true,
     this.icon,
     this.destructive = false,
     this.barrierColor,
     this.isLoading = false,
   });
+
+  /// Determines the default icon shown above the title.
+  /// Ignored when [icon] is provided or [showIcon] is false.
+  final ModalConfirmationKind kind;
 
   final String confirmButtonText;
   final String cancelButtonText;
@@ -75,7 +83,10 @@ class ConfirmationModalOptions {
   final bool showCloseButton;
   final bool showCancelButton;
 
-  /// Custom icon widget shown above the title.
+  /// Set to false to hide the icon entirely.
+  final bool showIcon;
+
+  /// Custom icon widget — overrides the default kind icon.
   final Widget? icon;
 
   /// When true, confirm button uses danger styling.
@@ -106,6 +117,8 @@ class InputModalOptions {
     this.showCancelButton = true,
     this.stepLabel,
     this.barrierColor,
+    this.startIcon,
+    this.endIcon,
   });
 
   final String? placeholder;
@@ -133,6 +146,11 @@ class InputModalOptions {
   final String? stepLabel;
 
   final Color? barrierColor;
+
+  /// Leading / trailing icon widgets forwarded to [AppTextInput].
+  /// Ignored when [multiline] is true.
+  final Widget? startIcon;
+  final Widget? endIcon;
 }
 
 enum InputModalInputType { text, number, email, password }

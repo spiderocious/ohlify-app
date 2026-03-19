@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:ohlify/shared/notifiers/modal_notifier.dart';
+import 'package:ohlify/shared/services/drawer_service.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_icon_button/app_icon_button.dart';
@@ -152,9 +154,17 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
           ScreenContinueBar(
             onPressed: _otp.length == 6
-                ? () {
-                    // TODO: verify OTP and navigate to next step
-                  }
+                ? () => DrawerService.instance.showFeedbackModal(
+                      'Account Created Successfully',
+                      'Great! Your account has been created. You can now proceed to log in with your details.',
+                      options: const FeedbackModalOptions(
+                        kind: ModalFeedbackKind.success,
+                        position: ModalPosition.fullscreen,
+                        showCloseButton: false,
+                        dismissible: false,
+                        confirmButtonText: 'Login',
+                      ),
+                    )
                 : null,
           ),
         ],

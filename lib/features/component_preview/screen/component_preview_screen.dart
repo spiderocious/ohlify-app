@@ -4,6 +4,7 @@ import 'package:ohlify/features/component_preview/screen/parts/buttons_preview.d
 import 'package:ohlify/features/component_preview/screen/parts/icon_buttons_preview.dart';
 import 'package:ohlify/features/component_preview/screen/parts/inputs_preview.dart';
 import 'package:ohlify/features/component_preview/screen/parts/tags_preview.dart';
+import 'package:ohlify/features/component_preview/screen/parts/modals_preview.dart';
 import 'package:ohlify/features/component_preview/screen/parts/toasts_preview.dart';
 import 'package:ohlify/features/component_preview/screen/parts/typography_preview.dart';
 import 'package:ohlify/features/component_preview/screen/parts/typography_variants_preview.dart';
@@ -34,6 +35,8 @@ class ComponentPreviewScreen extends StatelessWidget {
           _PreviewSection(title: 'Tags', child: TagsPreview()),
           SizedBox(height: 16),
           _PreviewSection(title: 'Toasts', child: ToastsPreview()),
+          SizedBox(height: 16),
+          _PreviewSection(title: 'Modals', child: ModalsPreview()),
         ],
       ),
     );
