@@ -1,29 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:ohlify/ui/theme/app_colors.dart';
 
 abstract final class AppTheme {
-  static ThemeData light() {
-    final base = ThemeData.light(useMaterial3: true);
+  static const _fontFamily = 'MonaSans';
 
-    return base.copyWith(
+  static ThemeData light() {
+    return ThemeData(
+      useMaterial3: true,
+      fontFamily: _fontFamily,
       scaffoldBackgroundColor: AppColors.background,
-      colorScheme: base.colorScheme.copyWith(
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: AppColors.primary,
         primary: AppColors.primary,
         error: AppColors.error,
         surface: AppColors.surface,
+        brightness: Brightness.light,
       ),
-      textTheme: GoogleFonts.quicksandTextTheme(base.textTheme).copyWith(
-        bodyLarge: GoogleFonts.quicksand(color: AppColors.textPrimary),
-        bodyMedium: GoogleFonts.quicksand(color: AppColors.textPrimary),
-        bodySmall: GoogleFonts.quicksand(color: AppColors.textMuted),
+      textTheme: const TextTheme(
+        bodyLarge: TextStyle(
+          fontFamily: _fontFamily,
+          color: AppColors.textPrimary,
+          fontSize: 16,
+        ),
+        bodyMedium: TextStyle(
+          fontFamily: _fontFamily,
+          color: AppColors.textPrimary,
+          fontSize: 14,
+        ),
+        bodySmall: TextStyle(
+          fontFamily: _fontFamily,
+          color: AppColors.textMuted,
+          fontSize: 12,
+        ),
+        titleLarge: TextStyle(
+          fontFamily: _fontFamily,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w700,
+          fontSize: 22,
+        ),
+        titleMedium: TextStyle(
+          fontFamily: _fontFamily,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w600,
+          fontSize: 16,
+        ),
+        titleSmall: TextStyle(
+          fontFamily: _fontFamily,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
+        labelLarge: TextStyle(
+          fontFamily: _fontFamily,
+          fontWeight: FontWeight.w600,
+          fontSize: 14,
+        ),
       ),
       appBarTheme: const AppBarTheme(
         elevation: 0,
         backgroundColor: AppColors.background,
         foregroundColor: AppColors.textPrimary,
         surfaceTintColor: Colors.transparent,
+        titleTextStyle: TextStyle(
+          fontFamily: _fontFamily,
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+          color: AppColors.textPrimary,
+        ),
       ),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(
@@ -55,7 +99,8 @@ abstract final class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          textStyle: GoogleFonts.quicksand(
+          textStyle: const TextStyle(
+            fontFamily: _fontFamily,
             fontWeight: FontWeight.w600,
             fontSize: 16,
           ),

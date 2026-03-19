@@ -1,5 +1,5 @@
 abstract final class AppRoutes {
   static const root = '/';
-  // Add feature routes here as the app grows
-  // e.g. static const login = '/login';
+  static const onboarding = '/onboarding';
+  static const componentPreview = '/component-preview';
 }

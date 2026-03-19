@@ -45,3 +45,49 @@ flutter:
   uses-material-design: true
   assets:
     - .env
+    - assets/common/
+    - assets/logos/
+
+  fonts:
+    - family: MonaSans
+      fonts:
+        - asset: assets/fonts/MonaSans-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/MonaSans-ExtraLightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/MonaSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/MonaSans-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/MonaSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/MonaSans-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/MonaSans-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/MonaSans-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/MonaSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/MonaSans-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/MonaSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/MonaSans-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/MonaSans-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/MonaSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/MonaSans-Black.ttf
+          weight: 900
+        - asset: assets/fonts/MonaSans-BlackItalic.ttf
+          weight: 900
+          style: italic
