@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ohlify/ui/widgets/app_error_state.dart';
+import 'package:ohlify/ui/widgets/app_error_state/app_error_state.dart';
 
 class FeatureErrorBoundary extends StatefulWidget {
   const FeatureErrorBoundary({

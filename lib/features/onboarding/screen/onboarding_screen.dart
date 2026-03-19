@@ -7,7 +7,7 @@ import 'package:ohlify/features/onboarding/screen/parts/onboarding_slide.dart';
 import 'package:ohlify/shared/constants/app_routes.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_button.dart';
+import 'package:ohlify/ui/widgets/app_button/app_button.dart';
 
 const _slides = [
   OnboardingSlideData(

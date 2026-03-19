@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_icon_button.dart';
+import 'package:ohlify/ui/widgets/app_icon_button/app_icon_button.dart';
 
 class IconButtonsPreview extends StatelessWidget {
   const IconButtonsPreview({super.key});

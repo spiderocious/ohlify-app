@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_date_input.dart';
-import 'package:ohlify/ui/widgets/app_dropdown_input.dart';
-import 'package:ohlify/ui/widgets/app_otp_input.dart';
-import 'package:ohlify/ui/widgets/app_phone_input.dart';
-import 'package:ohlify/ui/widgets/app_text_area_input.dart';
-import 'package:ohlify/ui/widgets/app_text_input.dart';
+import 'package:ohlify/ui/widgets/app_date_input/app_date_input.dart';
+import 'package:ohlify/ui/widgets/app_dropdown_input/app_dropdown_input.dart';
+import 'package:ohlify/ui/widgets/app_otp_input/app_otp_input.dart';
+import 'package:ohlify/ui/widgets/app_phone_input/app_phone_input.dart';
+import 'package:ohlify/ui/widgets/app_text_area_input/app_text_area_input.dart';
+import 'package:ohlify/ui/widgets/app_text_input/app_text_input.dart';
 
 class InputsPreview extends StatefulWidget {
   const InputsPreview({super.key});

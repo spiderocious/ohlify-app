@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_text.dart';
+import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 
 class OnboardingSlideData {
   const OnboardingSlideData({

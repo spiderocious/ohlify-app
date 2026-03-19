@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 import 'package:ohlify/shared/notifiers/query_state.dart';
-import 'package:ohlify/ui/widgets/app_error_state.dart';
-import 'package:ohlify/ui/widgets/app_loader.dart';
+import 'package:ohlify/ui/widgets/app_error_state/app_error_state.dart';
+import 'package:ohlify/ui/widgets/app_loader/app_loader.dart';
 
 class AppQueryView<T> extends StatelessWidget {
   const AppQueryView({

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ohlify/ui/icons/app_svgs.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_svg.dart';
+import 'package:ohlify/ui/widgets/app_svg/app_svg.dart';
 
 class AppPhoneInput extends StatefulWidget {
   const AppPhoneInput({

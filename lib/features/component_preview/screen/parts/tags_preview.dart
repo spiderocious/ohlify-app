@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_tag.dart';
+import 'package:ohlify/ui/widgets/app_tag/app_tag.dart';
 
 class TagsPreview extends StatelessWidget {
   const TagsPreview({super.key});

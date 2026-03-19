@@ -5,10 +5,10 @@ import 'package:ohlify/shared/constants/app_routes.dart';
 
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_icon_button.dart';
-import 'package:ohlify/ui/widgets/app_text.dart';
-import 'package:ohlify/ui/widgets/app_text_input.dart';
-import 'package:ohlify/ui/widgets/screen_continue_bar.dart';
+import 'package:ohlify/ui/widgets/app_icon_button/app_icon_button.dart';
+import 'package:ohlify/ui/widgets/app_text/app_text.dart';
+import 'package:ohlify/ui/widgets/app_text_input/app_text_input.dart';
+import 'package:ohlify/ui/widgets/screen_continue_bar/screen_continue_bar.dart';
 
 class CreatePasswordScreen extends StatefulWidget {
   const CreatePasswordScreen({super.key});

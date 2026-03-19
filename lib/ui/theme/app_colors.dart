@@ -25,6 +25,18 @@ abstract final class AppColors {
   static const success = Color(0xFF16A34A);         // #16A34A
   static const warning = Color(0xFFD97706);         // #D97706
 
+  // Toast backgrounds
+  static const toastSuccessBg = Color(0xFF3FB12C);  // #3FB12C
+  static const toastErrorBg = Color(0xFFD80027);    // #D80027
+  static const toastWarningBg = Color(0xFF92400E);  // #92400E
+  static const toastInfoBg = Color(0xFF1E3A5F);     // #1E3A5F
+
+  // Toast icon tints
+  static const toastSuccessIcon = Color(0xFF4ADE80); // #4ADE80
+  static const toastErrorIcon = Color(0xFFFCA5A5);   // #FCA5A5
+  static const toastWarningIcon = Color(0xFFFCD34D); // #FCD34D
+  static const toastInfoIcon = Color(0xFF93C5FD);    // #93C5FD
+
   // Text semantic colors
   static const textDeepBlue = Color(0xFF0F0872);    // #0F0872
   static const textSilver = Color(0xFF807E7E);      // #807E7E
