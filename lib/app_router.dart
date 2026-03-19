@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:ohlify/features/component_preview/component_preview_routes.dart';
+import 'package:ohlify/features/onboarding/onboarding_routes.dart';
+import 'package:ohlify/features/register/register_routes.dart';
 import 'package:ohlify/features/splash/splash_routes.dart';
 
 // Global navigator key — used by interceptors to redirect without context
@@ -15,6 +17,8 @@ final GoRouter appRouter = GoRouter(
   ),
   routes: [
     ...splashRoutes,
+    ...onboardingRoutes,
+    ...registerRoutes,
     ...componentPreviewRoutes,
     // Feature routes are added here as the app grows
   ],

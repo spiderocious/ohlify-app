@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ohlify/ui/icons/app_svgs.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
+import 'package:ohlify/ui/widgets/app_svg.dart';
 
 class AppPhoneInput extends StatefulWidget {
   const AppPhoneInput({
@@ -37,7 +39,6 @@ class _AppPhoneInputState extends State<AppPhoneInput> {
 
   // Only NG for now
   static const _dialCode = '+234';
-  static const _flag = '🇳🇬';
 
   @override
   void initState() {
@@ -102,7 +103,7 @@ class _AppPhoneInputState extends State<AppPhoneInput> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(_flag, style: TextStyle(fontSize: 20)),
+                    const AppSvg(AppSvgs.flagNg, size: 22),
                     const SizedBox(width: 6),
                     const Text(
                       _dialCode,

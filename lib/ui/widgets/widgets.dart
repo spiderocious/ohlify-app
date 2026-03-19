@@ -1,4 +1,5 @@
 export 'package:ohlify/ui/widgets/app_button.dart';
+export 'package:ohlify/ui/widgets/app_svg.dart';
 export 'package:ohlify/ui/widgets/app_tag.dart';
 export 'package:ohlify/ui/widgets/app_date_input.dart';
 export 'package:ohlify/ui/widgets/app_dropdown_input.dart';
