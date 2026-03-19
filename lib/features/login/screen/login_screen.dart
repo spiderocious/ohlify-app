@@ -138,9 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ScreenContinueBar(
             label: 'Login',
             onPressed: _isValid
-                ? () {
-                    // TODO: perform login
-                  }
+                ? () => context.go(AppRoutes.home)
                 : null,
           ),
         ],

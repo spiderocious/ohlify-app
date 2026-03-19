@@ -13,7 +13,23 @@ abstract final class AppSvgs {
   // ── Flags ──────────────────────────────────────────────────────────
   static const flagNg = 'assets/svg/flags/ng.svg'; // 🇳🇬 Nigeria
 
-  // ── Custom icons ───────────────────────────────────────────────────
-  // Add exported Figma SVG icons here as you go, e.g.:
-  // static const arrowRight = 'assets/svg/icons/arrow-right.svg';
+  // ── Logo ───────────────────────────────────────────────────────────
+  /// Full Ohlify wordmark (82×28). Pass [color] to tint, or leave null
+  /// to preserve the original two-colour design.
+  static const logo = 'assets/svg/icons/logo.svg';
+
+  // ── Bottom nav icons ───────────────────────────────────────────────
+  /// Inactive colour (#64619C) is baked into the SVG fill.
+  /// Pass `color: AppColors.primary` (white works too inside the pill)
+  /// via [AppSvg] to switch to the active state.
+  static const navHome    = 'assets/svg/icons/nav_home.svg';
+  static const navCalls   = 'assets/svg/icons/nav_calls.svg';
+  static const navWallet  = 'assets/svg/icons/nav_wallet.svg';
+  static const navProfile = 'assets/svg/icons/nav_profile.svg';
+
+  // ── Action icons ───────────────────────────────────────────────────
+  static const copy = 'assets/svg/icons/ic_copy.svg';
+
+  // ── Rating ─────────────────────────────────────────────────────────
+  static const ratingBadge = 'assets/svg/icons/ic_rating_badge.svg';
 }

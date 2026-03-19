@@ -37,6 +37,10 @@ abstract final class AppColors {
   static const toastWarningIcon = Color(0xFFFCD34D); // #FCD34D
   static const toastInfoIcon = Color(0xFF93C5FD);    // #93C5FD
 
+  // Shell / nav
+  static const navBackground = Color(0xFFF0EFF8);     // #F0EFF8 — bottom nav bg (lavender tint)
+  static const navIconInactive = Color(0xFF5C5A8A);   // #5C5A8A — inactive nav icon
+
   // Text semantic colors
   static const textDeepBlue = Color(0xFF0F0872);    // #0F0872
   static const textSilver = Color(0xFF807E7E);      // #807E7E

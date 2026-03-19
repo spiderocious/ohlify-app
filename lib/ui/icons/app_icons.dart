@@ -9,6 +9,16 @@ abstract final class AppIcons {
   static const chevronDown = Icons.keyboard_arrow_down;
   static const back = Icons.arrow_back;
 
+  // Bottom nav
+  static const navHome = Icons.home_rounded;
+  static const navCalls = Icons.calendar_today_rounded;
+  static const navWallet = Icons.account_balance_wallet_rounded;
+  static const navProfile = Icons.account_circle_rounded;
+
+  // Header actions
+  static const copyLink = Icons.copy_rounded;
+  static const notification = Icons.notifications_rounded;
+
   // Actions
   static const close = Icons.close;
   static const add = Icons.add;

@@ -25,13 +25,11 @@ class OnboardingSlide extends StatelessWidget {
         const SizedBox(height: 58),
         // Phone illustration — shared across all slides
         SizedBox(
-          height: 340,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
             child: Image.asset(
               'assets/common/login-preview.png',
               fit: BoxFit.contain,
-              width: 280,
             ),
           ),
         ),

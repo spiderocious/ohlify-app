@@ -83,6 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     // Phone input
                     AppPhoneInput(
+                      label: 'Phone number',
                       placeholder: '808 123 4567',
                       value: _phone,
                       onChanged: (v) => setState(() => _phone = v),

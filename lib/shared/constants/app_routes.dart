@@ -8,5 +8,12 @@ abstract final class AppRoutes {
   static const forgotPassword = '/forgot-password';
   static const forgotPasswordVerifyOtp = '/forgot-password/verify-otp';
   static const resetPassword = '/forgot-password/reset-password';
+
+  // Main app shell
+  static const home = '/home';
+  static const calls = '/calls';
+  static const wallet = '/wallet';
+  static const profile = '/profile';
+
   static const componentPreview = '/component-preview';
 }
