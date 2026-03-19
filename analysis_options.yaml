@@ -1,0 +1,30 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - '**/*.g.dart'
+    - '**/*.freezed.dart'
+  strong-mode:
+    implicit-casts: false
+    implicit-dynamic: false
+  errors:
+    missing_return: error
+    dead_code: warning
+    unused_import: warning
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    - always_declare_return_types
+    - always_use_package_imports
+    - avoid_dynamic_calls
+    - avoid_print
+    - avoid_unnecessary_containers
+    - prefer_const_constructors
+    - prefer_const_literals_to_create_immutables
+    - prefer_final_locals
+    - prefer_single_quotes
+    - require_trailing_commas
+    - sized_box_for_whitespace
+    - use_key_in_widget_constructors
+    - use_super_parameters

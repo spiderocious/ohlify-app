@@ -1,0 +1,47 @@
+name: ohlify
+description: Ohlify mobile app
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State management
+  provider: ^6.1.2
+
+  # Routing
+  go_router: ^15.1.1
+
+  # HTTP client
+  dio: ^5.7.0
+
+  # Immutable models + JSON serialization
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # Secure token storage
+  flutter_secure_storage: ^9.2.4
+
+  # Environment config
+  flutter_dotenv: ^5.2.1
+
+  # Fonts (Quicksand via google_fonts)
+  google_fonts: ^6.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.4.13
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  mockito: ^5.4.5
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
