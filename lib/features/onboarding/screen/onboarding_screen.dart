@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:ohlify/features/onboarding/screen/parts/onboarding_slide.dart';
 import 'package:ohlify/shared/constants/app_routes.dart';
+import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_button.dart';
 
@@ -74,6 +75,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => context.push(AppRoutes.componentPreview),
+        tooltip: 'Component Preview',
+        child: const Icon(AppIcons.components),
+      ),
       body: SafeArea(
         child: Column(
           children: [
