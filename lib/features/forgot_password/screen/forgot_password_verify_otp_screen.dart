@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:ohlify/shared/constants/app_routes.dart';
-import 'package:ohlify/shared/notifiers/modal_notifier.dart';
-import 'package:ohlify/shared/services/drawer_service.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_icon_button/app_icon_button.dart';
@@ -13,17 +11,20 @@ import 'package:ohlify/ui/widgets/app_otp_input/app_otp_input.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 import 'package:ohlify/ui/widgets/screen_continue_bar/screen_continue_bar.dart';
 
-class VerifyOtpScreen extends StatefulWidget {
-  const VerifyOtpScreen({super.key});
+class ForgotPasswordVerifyOtpScreen extends StatefulWidget {
+  const ForgotPasswordVerifyOtpScreen({super.key, required this.email});
+
+  final String email;
 
   @override
-  State<VerifyOtpScreen> createState() => _VerifyOtpScreenState();
+  State<ForgotPasswordVerifyOtpScreen> createState() =>
+      _ForgotPasswordVerifyOtpScreenState();
 }
 
-class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
+class _ForgotPasswordVerifyOtpScreenState
+    extends State<ForgotPasswordVerifyOtpScreen> {
   String _otp = '';
 
-  // Resend countdown — 300 seconds
   static const _resendSeconds = 300;
   late int _secondsLeft;
   Timer? _timer;
@@ -58,6 +59,17 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
     return '$mins:$secs';
   }
 
+  /// Masks email: ade**ji@gmail.com
+  String get _maskedEmail {
+    final parts = widget.email.split('@');
+    if (parts.length != 2) return widget.email;
+    final name = parts[0];
+    if (name.length <= 4) return widget.email;
+    final masked =
+        '${name.substring(0, 3)}**${name.substring(name.length - 2)}';
+    return '$masked@${parts[1]}';
+  }
+
   @override
   Widget build(BuildContext context) {
     final canResend = _secondsLeft == 0;
@@ -74,39 +86,41 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AppIconButton(
-                      icon: const Icon(
-                        AppIcons.back,
-                        color: AppColors.textPrimary,
-                        size: 18,
-                      ),
-                      variant: AppIconButtonVariant.outline,
-                      size: 40,
-                      onPressed: () => context.pop(),
+                    Row(
+                      children: [
+                        AppIconButton(
+                          icon: const Icon(
+                            AppIcons.back,
+                            color: AppColors.textPrimary,
+                            size: 18,
+                          ),
+                          variant: AppIconButtonVariant.outline,
+                          size: 40,
+                          onPressed: () => context.pop(),
+                        ),
+                        const Expanded(
+                          child: Text(
+                            'Verification',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontFamily: 'MonaSans',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.textMuted,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 40),
+                      ],
                     ),
-                    const SizedBox(height: 28),
+                    const SizedBox(height: 32),
 
-                    Image.asset(
-                      'assets/logos/logo-primary.png',
-                      width: 40,
-                      height: 40,
-                    ),
-                    const SizedBox(height: 20),
-
-                    const AppText(
-                      'Authentication',
+                    AppText(
+                      'Please enter the 6-digit OTP we sent to $_maskedEmail',
                       variant: AppTextVariant.bodyTitle,
                       align: TextAlign.start,
                       color: AppColors.textPrimary,
                       weight: FontWeight.w700,
-                    ),
-                    const SizedBox(height: 8),
-
-                    const AppText(
-                      'Enter the 6-six digit code sent to the email address or phone number you provided below.',
-                      variant: AppTextVariant.body,
-                      align: TextAlign.start,
-                      color: AppColors.textMuted,
                     ),
                     const SizedBox(height: 32),
 
@@ -118,7 +132,6 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                     ),
                     const SizedBox(height: 20),
 
-                    // Resend row
                     Row(
                       children: [
                         const Text(
@@ -155,18 +168,7 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
 
           ScreenContinueBar(
             onPressed: _otp.length == 6
-                ? () => DrawerService.instance.showFeedbackModal(
-                      'Account Created Successfully',
-                      'Great! Your account has been created. You can now proceed to log in with your details.',
-                      options: FeedbackModalOptions(
-                        kind: ModalFeedbackKind.success,
-                        position: ModalPosition.fullscreen,
-                        showCloseButton: false,
-                        dismissible: false,
-                        confirmButtonText: 'Login',
-                        onConfirm: () => context.pushReplacement(AppRoutes.login),
-                      ),
-                    )
+                ? () => context.push(AppRoutes.resetPassword)
                 : null,
           ),
         ],

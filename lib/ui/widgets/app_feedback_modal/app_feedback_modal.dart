@@ -121,7 +121,10 @@ class AppFeedbackModal extends StatelessWidget {
             label: opts.confirmButtonText,
             expanded: true,
             radius: 100,
-            onPressed: onDismiss,
+            onPressed: () {
+              opts.onConfirm?.call();
+              onDismiss();
+            },
           ),
 
           // Optional secondary action
@@ -223,7 +226,10 @@ class _FullscreenFeedback extends StatelessWidget {
                     label: opts.confirmButtonText,
                     expanded: true,
                     radius: 100,
-                    onPressed: onDismiss,
+                    onPressed: () {
+                      opts.onConfirm?.call();
+                      onDismiss();
+                    },
                   ),
                   if (opts.actionLabel != null) ...[
                     const SizedBox(height: 10),

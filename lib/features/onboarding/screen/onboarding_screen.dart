@@ -129,9 +129,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   const SizedBox(height: 12),
                   AppButton(
                     label: 'Login',
-                    onPressed: () {
-                      // TODO: navigate to login
-                    },
+                    onPressed: () => context.push(AppRoutes.login),
                     variant: AppButtonVariant.outline,
                     expanded: true,
                     radius: 100,

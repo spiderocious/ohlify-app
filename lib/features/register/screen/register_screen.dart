@@ -8,6 +8,7 @@ import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_icon_button/app_icon_button.dart';
 import 'package:ohlify/ui/widgets/app_phone_input/app_phone_input.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
+import 'package:ohlify/ui/widgets/app_text_input/app_text_input.dart';
 import 'package:ohlify/ui/widgets/screen_continue_bar/screen_continue_bar.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -19,6 +20,12 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   String _phone = '';
+  String _email = '';
+
+  static final _emailRegex = RegExp(r'^[\w.-]+@[\w.-]+\.\w{2,}$');
+
+  bool get _emailValid => _emailRegex.hasMatch(_email);
+  bool get _isValid => _phone.length >= 10 && _emailValid;
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +87,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       value: _phone,
                       onChanged: (v) => setState(() => _phone = v),
                     ),
+                    const SizedBox(height: 16),
+
+                    // Email input
+                    AppTextInput(
+                      label: 'Email address',
+                      placeholder: 'you@example.com',
+                      keyboardType: TextInputType.emailAddress,
+                      errorMessage: _email.isNotEmpty && !_emailValid
+                          ? 'Please enter a valid email address.'
+                          : null,
+                      onChanged: (v) => setState(() => _email = v),
+                    ),
                     const SizedBox(height: 20),
 
                     // Terms & conditions
@@ -91,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
 
           ScreenContinueBar(
-            onPressed: _phone.length >= 10
+            onPressed: _isValid
                 ? () => context.push(AppRoutes.createPassword)
                 : null,
           ),
@@ -144,4 +163,3 @@ class _TermsText extends StatelessWidget {
     );
   }
 }
-

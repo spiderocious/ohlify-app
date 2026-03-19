@@ -25,6 +25,7 @@ class FeedbackModalOptions {
     this.icon,
     this.actionLabel,
     this.onAction,
+    this.onConfirm,
     this.confirmButtonText = 'Done',
     this.barrierColor,
   });
@@ -40,6 +41,9 @@ class FeedbackModalOptions {
 
   /// Custom icon widget — overrides the default circle icon.
   final Widget? icon;
+
+  /// Called when the primary confirm button is tapped.
+  final VoidCallback? onConfirm;
 
   /// Optional secondary action button label below the primary button.
   final String? actionLabel;
