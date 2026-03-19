@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:ohlify/shared/constants/app_routes.dart';
+
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_icon_button.dart';
@@ -129,9 +131,7 @@ class _CreatePasswordScreenState extends State<CreatePasswordScreen> {
 
           ScreenContinueBar(
             onPressed: _isValid
-                ? () {
-                    // TODO: navigate to next step
-                  }
+                ? () => context.push(AppRoutes.verifyOtp)
                 : null,
           ),
         ],
