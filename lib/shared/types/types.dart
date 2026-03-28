@@ -4,3 +4,6 @@ export 'package:ohlify/shared/types/upcoming_call.dart';
 export 'package:ohlify/shared/types/scheduled_call.dart';
 export 'package:ohlify/shared/types/professional_category.dart';
 export 'package:ohlify/shared/types/professional.dart';
+export 'package:ohlify/shared/types/call_stats.dart';
+export 'package:ohlify/shared/types/scheduled_call_item.dart';
+export 'package:ohlify/shared/types/completed_call_item.dart';

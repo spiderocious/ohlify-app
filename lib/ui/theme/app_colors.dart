@@ -13,6 +13,7 @@ abstract final class AppColors {
   static const danger = Color(0xFFFF1E21);          // #FF1E21
   static const accent = Color(0xFFFBBF24);          // #FBBF24
   static const surfaceLight = Color(0xFFF7F7F7);    // #f7f7f7
+  static const surfaceDark = Color(0xFFF7F6FF);     // #f7f6ff
 
   // Neutrals
   static const background = Color(0xFFFFFFFF);      // #FFFFFF

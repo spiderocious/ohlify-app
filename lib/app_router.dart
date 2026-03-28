@@ -35,6 +35,8 @@ final GoRouter appRouter = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) => AppShell(
         navigationShell: navigationShell,
+        // Branches that don't want the header declare their index here.
+        showHeader: navigationShell.currentIndex != 1,
       ),
       branches: [
         StatefulShellBranch(

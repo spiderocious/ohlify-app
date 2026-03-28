@@ -32,4 +32,14 @@ abstract final class AppSvgs {
 
   // ── Rating ─────────────────────────────────────────────────────────
   static const ratingBadge = 'assets/svg/icons/ic_rating_badge.svg';
+
+  // ── Calls stats ────────────────────────────────────────────────────────
+  static const totalCallsIcon = 'assets/svg/icons/total-calls-icon.svg';
+  static const monthIcon      = 'assets/svg/icons/month-icon.svg';
+  static const weekIcon       = 'assets/svg/icons/week-icon.svg';
+
+  // ── Call meta ──────────────────────────────────────────────────────────
+  static const clock      = 'assets/svg/icons/clock.svg';
+  static const calendar   = 'assets/svg/icons/calendar.svg';
+  static const stopwatch  = 'assets/svg/icons/stopwatch.svg';
 }
