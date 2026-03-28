@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:ohlify/ui/theme/app_colors.dart';
+import 'package:ohlify/ui/widgets/app_button/app_button.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 
 class UpcomingCallBanner extends StatelessWidget {
@@ -34,7 +35,14 @@ class UpcomingCallBanner extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          _JoinButton(onPressed: onJoin),
+          AppButton(
+            label: 'Join meeting',
+            onPressed: onJoin,
+            width: 120,
+            height: 48,
+            radius: 100,
+            textStyle: const TextStyle(fontSize: 14),
+          ),
         ],
       ),
     );
@@ -73,9 +81,11 @@ class _CallInfo extends StatelessWidget {
       children: [
         AppText(
           'Meeting with\n$calleeName',
-          variant: AppTextVariant.medium,
+          variant: AppTextVariant.body,
           align: TextAlign.start,
           color: AppColors.textJet,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         const SizedBox(height: 6),
         RichText(
@@ -102,28 +112,3 @@ class _CallInfo extends StatelessWidget {
   }
 }
 
-class _JoinButton extends StatelessWidget {
-  const _JoinButton({required this.onPressed});
-
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textWhite,
-        shape: const StadiumBorder(),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        elevation: 0,
-        textStyle: const TextStyle(
-          fontFamily: 'MonaSans',
-          fontWeight: FontWeight.w600,
-          fontSize: 15,
-        ),
-      ),
-      child: const Text('Join meeting'),
-    );
-  }
-}

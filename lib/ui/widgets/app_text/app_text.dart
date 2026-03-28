@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 
-enum AppTextVariant { title, subtitle, header, subheader, label, medium, bodyTitle, body }
+enum AppTextVariant { title, subtitle, header, subheader, label, medium, bodyTitle, body, bodySmall, bodySmallest, bodyNormal }
 
 class AppText extends StatelessWidget {
   const AppText(
@@ -89,6 +89,30 @@ class AppText extends StatelessWidget {
         letterSpacing: -0.14, // -1% of 14px
         color: AppColors.textPrimary,
       ),
+    AppTextVariant.bodyNormal => const TextStyle(
+      fontFamily: _fontFamily,
+      fontWeight: FontWeight.w500,
+      fontSize: 12,
+      height: 20 / 14,
+      letterSpacing: -0.14, // -1% of 14px
+      color: AppColors.textPrimary,
+    ),
+    AppTextVariant.bodySmall => const TextStyle(
+      fontFamily: _fontFamily,
+      fontWeight: FontWeight.w500,
+      fontSize: 10,
+      height: 20 / 14,
+      letterSpacing: -0.14, // -1% of 14px
+      color: AppColors.textPrimary,
+    ),
+    AppTextVariant.bodySmallest => const TextStyle(
+      fontFamily: _fontFamily,
+      fontWeight: FontWeight.w400,
+      fontSize: 8,
+      height: 20 / 14,
+      letterSpacing: -0.14, // -1% of 14px
+      color: AppColors.textPrimary,
+    ),
   };
 
   TextAlign get _defaultAlign => switch (variant) {

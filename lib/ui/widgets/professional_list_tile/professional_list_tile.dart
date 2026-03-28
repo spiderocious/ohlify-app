@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_button/app_button.dart';
+import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 import 'package:ohlify/ui/widgets/professional_rating/professional_rating.dart';
 
 class ProfessionalListTile extends StatelessWidget {
@@ -29,7 +30,7 @@ class ProfessionalListTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(14),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: AppColors.background,
           borderRadius: BorderRadius.circular(20),
@@ -38,48 +39,43 @@ class ProfessionalListTile extends StatelessWidget {
           children: [
             // Avatar
             ClipRRect(
-              borderRadius: BorderRadius.circular(14),
+              borderRadius: BorderRadius.circular(16),
               child: imageUrl != null
                   ? Image.network(
                       imageUrl!,
-                      width: 72,
-                      height: 72,
+                      width: 80,
+                      height: 80,
                       fit: BoxFit.cover,
                       errorBuilder: (_, __, _) => _placeholder(),
                     )
                   : _placeholder(),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 14),
 
             // Name + role + rating
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  AppText(
                     name,
+                    variant: AppTextVariant.body,
+                    color: AppColors.textBlack,
+                    align: TextAlign.start,
+                    weight: FontWeight.w500,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontFamily: 'MonaSans',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
                   ),
-                  const SizedBox(height: 2),
-                  Text(
+                  const SizedBox(height: 4),
+                  AppText(
                     role,
+                    variant: AppTextVariant.bodyNormal,
+                    color: AppColors.textMuted,
+                    align: TextAlign.start,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontFamily: 'MonaSans',
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.textMuted,
-                    ),
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   ProfessionalRating(
                     rating: rating,
                     reviewCount: reviewCount,
@@ -95,9 +91,9 @@ class ProfessionalListTile extends StatelessWidget {
               label: 'Schedule call',
               onPressed: onSchedule,
               radius: 100,
-              height: 40,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              textStyle: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+              width: 93,
+              height: 32,
+              textStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
             ),
           ],
         ),
@@ -107,13 +103,10 @@ class ProfessionalListTile extends StatelessWidget {
 
   Widget _placeholder() {
     return Container(
-      width: 72,
-      height: 72,
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: const Icon(Icons.person, size: 32, color: AppColors.textMuted),
+      width: 80,
+      height: 80,
+      color: AppColors.surface,
+      child: const Icon(Icons.person, size: 36, color: AppColors.textMuted),
     );
   }
 }
