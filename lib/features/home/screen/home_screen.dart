@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import 'package:ohlify/shared/constants/app_routes.dart';
+import 'package:ohlify/features/home/screen/parts/upcoming_call_banner.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
-import 'package:ohlify/ui/widgets/app_banner/app_banner.dart';
 import 'package:ohlify/ui/widgets/app_search_bar/app_search_bar.dart';
-import 'package:ohlify/ui/widgets/category_filter_bar/category_filter_bar.dart';
-import 'package:ohlify/ui/widgets/professional_list_tile/professional_list_tile.dart';
-import 'package:ohlify/ui/widgets/section_header/section_header.dart';
-import 'package:ohlify/ui/widgets/upcoming_call_card/upcoming_call_card.dart';
 
 // ---------------------------------------------------------------------------
 // Mock data
@@ -94,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.surface,
+      backgroundColor: AppColors.surfaceLight,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -102,103 +96,10 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
-
-              // Welcome banner
-              AppBanner(
-                variant: AppBannerVariant.primary,
-                rounded: true,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Good morning! 👋',
-                        style: TextStyle(
-                          fontFamily: 'MonaSans',
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Find the right professional for your needs.',
-                        style: TextStyle(
-                          fontFamily: 'MonaSans',
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white.withValues(alpha: 0.85),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-
               // Search bar
-              AppSearchBar(
-                readOnly: true,
-                onTap: () {},
-              ),
+              AppSearchBar(readOnly: true, onTap: () {}),
               const SizedBox(height: 24),
 
-              // Upcoming calls section
-              SectionHeader(
-                title: 'Upcoming Calls',
-                onViewAll: () => context.go(AppRoutes.calls),
-              ),
-              const SizedBox(height: 14),
-              SizedBox(
-                height: 224,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  clipBehavior: Clip.none,
-                  itemCount: _upcomingCalls.length,
-                  separatorBuilder: (_, _) => const SizedBox(width: 12),
-                  itemBuilder: (context, index) {
-                    final call = _upcomingCalls[index];
-                    return UpcomingCallCard(
-                      name: call.name,
-                      role: call.role,
-                      rating: call.rating,
-                      reviewCount: call.reviewCount,
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(height: 24),
-
-              // Category filter
-              const SectionHeader(title: 'Categories'),
-              const SizedBox(height: 14),
-              CategoryFilterBar(
-                categories: _categories,
-                selected: _selectedCategory,
-                onSelect: (cat) => setState(() => _selectedCategory = cat),
-              ),
-              const SizedBox(height: 24),
-
-              // Popular professionals
-              const SectionHeader(title: 'Popular Professionals'),
-              const SizedBox(height: 14),
-              ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: _professionals.length,
-                separatorBuilder: (_, _) => const SizedBox(height: 12),
-                itemBuilder: (context, index) {
-                  final prof = _professionals[index];
-                  return ProfessionalListTile(
-                    name: prof.name,
-                    role: prof.role,
-                    rating: prof.rating,
-                    reviewCount: prof.reviewCount,
-                  );
-                },
-              ),
-              const SizedBox(height: 32),
             ],
           ),
         ),

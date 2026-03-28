@@ -24,7 +24,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
     return Container(
       height: preferredSize.height,
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      color: AppColors.background,
+      color: AppColors.surface,
       child: Row(
         children: [
           // SVG logo — tinted null so the original two-colour design shows
@@ -38,7 +38,7 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               decoration: BoxDecoration(
-                color: AppColors.surface,
+                color: AppColors.textWhite,
                 borderRadius: BorderRadius.circular(100),
               ),
               child: const Row(

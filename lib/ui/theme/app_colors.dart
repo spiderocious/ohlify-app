@@ -12,6 +12,7 @@ abstract final class AppColors {
   static const callico = Color(0x2E5E5E5E);         // #5E5E5E 18% — semi-transparent overlay
   static const danger = Color(0xFFFF1E21);          // #FF1E21
   static const accent = Color(0xFFFBBF24);          // #FBBF24
+  static const surfaceLight = Color(0xFFF7F7F7);    // #f7f7f7
 
   // Neutrals
   static const background = Color(0xFFFFFFFF);      // #FFFFFF
