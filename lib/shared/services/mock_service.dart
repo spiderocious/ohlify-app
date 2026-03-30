@@ -119,6 +119,45 @@ abstract final class MockService {
     ];
   }
 
+  static String getWalletBalance() => '₦560,894,393';
+
+  static WalletStats getWalletStats() {
+    return const WalletStats(thisWeek: 18, thisMonth: 47, totalCalls: 47);
+  }
+
+  static List<Transaction> getTransactions() {
+    return const [
+      Transaction(
+        id: 'tx-001',
+        type: TransactionType.withdrawalToBank,
+        datetime: 'Feb 2, 2023, 09:56 AM',
+        amount: '₦20,000.00',
+        status: TransactionStatus.completed,
+      ),
+      Transaction(
+        id: 'tx-002',
+        type: TransactionType.paymentAudioCall,
+        datetime: 'Feb 2, 2023, 09:56 AM',
+        amount: '-₦20,000.00',
+        status: TransactionStatus.completed,
+      ),
+      Transaction(
+        id: 'tx-003',
+        type: TransactionType.paymentVideoCall,
+        datetime: 'Feb 2, 2023, 09:56 AM',
+        amount: '-₦20,000.00',
+        status: TransactionStatus.completed,
+      ),
+      Transaction(
+        id: 'tx-004',
+        type: TransactionType.scheduledAudioCall,
+        datetime: 'Feb 2, 2023, 09:56 AM',
+        amount: '+₦20,000.00',
+        status: TransactionStatus.completed,
+      ),
+    ];
+  }
+
   static CallStats getCallStats() {
     return const CallStats(total: 47, thisMonth: 47, thisWeek: 18);
   }

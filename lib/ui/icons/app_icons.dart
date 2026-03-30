@@ -50,6 +50,9 @@ abstract final class AppIcons {
   static const person = Icons.person_outline;
   static const settings = Icons.settings_outlined;
 
+  // Finance
+  static const building = Icons.account_balance_outlined;
+
   // Dev tools
   static const components = Icons.widgets_outlined;
 }
