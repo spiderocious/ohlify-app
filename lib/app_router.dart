@@ -36,8 +36,9 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state, navigationShell) => AppShell(
         navigationShell: navigationShell,
         // Branches that don't want the header declare their index here.
-        // Branches that manage their own header (calls=1, wallet=2) opt out here.
-        showHeader: ![1, 2].contains(navigationShell.currentIndex),
+        // Branches that manage their own header opt out here.
+        // home=0 keeps header; calls=1, wallet=2, profile=3 do not.
+        showHeader: navigationShell.currentIndex == 0,
       ),
       branches: [
         StatefulShellBranch(
