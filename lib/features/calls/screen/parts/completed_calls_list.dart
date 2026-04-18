@@ -7,9 +7,14 @@ import 'package:ohlify/ui/widgets/app_tag/app_tag.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 
 class CompletedCallsList extends StatelessWidget {
-  const CompletedCallsList({super.key, required this.groups});
+  const CompletedCallsList({
+    super.key,
+    required this.groups,
+    required this.onTap,
+  });
 
   final List<CompletedCallGroup> groups;
+  final ValueChanged<CompletedCallItem> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -18,15 +23,19 @@ class CompletedCallsList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: groups.length,
       separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (_, i) => _CompletedCallGroup(group: groups[i]),
+      itemBuilder: (_, i) => _CompletedCallGroup(
+        group: groups[i],
+        onTap: onTap,
+      ),
     );
   }
 }
 
 class _CompletedCallGroup extends StatelessWidget {
-  const _CompletedCallGroup({required this.group});
+  const _CompletedCallGroup({required this.group, required this.onTap});
 
   final CompletedCallGroup group;
+  final ValueChanged<CompletedCallItem> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +66,10 @@ class _CompletedCallGroup extends StatelessWidget {
               thickness: 1,
               color: AppColors.border,
             ),
-            itemBuilder: (_, i) => _CompletedCallRow(call: group.calls[i]),
+            itemBuilder: (_, i) => _CompletedCallRow(
+              call: group.calls[i],
+              onTap: () => onTap(group.calls[i]),
+            ),
           ),
         ],
       ),
@@ -66,15 +78,19 @@ class _CompletedCallGroup extends StatelessWidget {
 }
 
 class _CompletedCallRow extends StatelessWidget {
-  const _CompletedCallRow({required this.call});
+  const _CompletedCallRow({required this.call, required this.onTap});
 
   final CompletedCallItem call;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     final isVideo = call.callType == CallType.video;
 
-    return Row(
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Row(
       children: [
         ClipOval(
           child: call.avatarUrl != null
@@ -143,6 +159,7 @@ class _CompletedCallRow extends StatelessWidget {
           ],
         ),
       ],
+      ),
     );
   }
 }

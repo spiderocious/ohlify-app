@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 import 'package:ohlify/shared/notifiers/modal_notifier.dart';
 import 'package:ohlify/shared/notifiers/toast_notifier.dart';
 
@@ -76,6 +78,19 @@ class DrawerService {
     assert(_modalNotifier != null,
         'DrawerService not initialised — call initModal() first.');
     final c = _modalNotifier!.addInput(title, message, options);
+    return DrawerHandle._(onDismiss: c.dismiss, dismissed: c.dismissed);
+  }
+
+  // ── Custom modal ───────────────────────────────────────────────────────────
+
+  DrawerHandle showCustomModal(
+    String title,
+    Widget Function(BuildContext context, VoidCallback onDismiss) builder, {
+    CustomModalOptions options = const CustomModalOptions(),
+  }) {
+    assert(_modalNotifier != null,
+        'DrawerService not initialised — call initModal() first.');
+    final c = _modalNotifier!.addCustom(title, builder, options);
     return DrawerHandle._(onDismiss: c.dismiss, dismissed: c.dismissed);
   }
 }

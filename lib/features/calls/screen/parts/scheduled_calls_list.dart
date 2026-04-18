@@ -16,12 +16,14 @@ class ScheduledCallsList extends StatelessWidget {
     required this.onCancel,
     required this.onReschedule,
     required this.onJoin,
+    required this.onTap,
   });
 
   final List<ScheduledCallItem> calls;
   final ValueChanged<ScheduledCallItem> onCancel;
   final ValueChanged<ScheduledCallItem> onReschedule;
   final ValueChanged<ScheduledCallItem> onJoin;
+  final ValueChanged<ScheduledCallItem> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class ScheduledCallsList extends StatelessWidget {
         onCancel: () => onCancel(calls[i]),
         onReschedule: () => onReschedule(calls[i]),
         onJoin: () => onJoin(calls[i]),
+        onTap: () => onTap(calls[i]),
       ),
     );
   }
@@ -46,16 +49,21 @@ class _ScheduledCallCard extends StatelessWidget {
     required this.onCancel,
     required this.onReschedule,
     required this.onJoin,
+    required this.onTap,
   });
 
   final ScheduledCallItem call;
   final VoidCallback onCancel;
   final VoidCallback onReschedule;
   final VoidCallback onJoin;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
       padding: const EdgeInsets.all(4),
       decoration: BoxDecoration(
         color: AppColors.surfaceDark,
@@ -92,6 +100,7 @@ class _ScheduledCallCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
       ),
     );
   }

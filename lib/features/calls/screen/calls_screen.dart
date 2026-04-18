@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:ohlify/features/calls/screen/parts/call_stats_summary.dart';
 import 'package:ohlify/features/calls/screen/parts/completed_calls_list.dart';
 import 'package:ohlify/features/calls/screen/parts/scheduled_calls_list.dart';
+import 'package:ohlify/shared/constants/app_routes.dart';
 import 'package:ohlify/shared/services/services.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_tab_view/app_tab_view.dart';
@@ -45,11 +47,17 @@ class CallsScreen extends StatelessWidget {
                       onCancel: (_) {},
                       onReschedule: (_) {},
                       onJoin: (_) {},
+                      onTap: (call) =>
+                          context.push('${AppRoutes.call}/${call.id}'),
                     ),
                   ),
                   AppTabItem(
                     label: 'Completed calls',
-                    child: CompletedCallsList(groups: completedCalls),
+                    child: CompletedCallsList(
+                      groups: completedCalls,
+                      onTap: (call) =>
+                          context.push('${AppRoutes.call}/${call.id}'),
+                    ),
                   ),
                 ],
               ),

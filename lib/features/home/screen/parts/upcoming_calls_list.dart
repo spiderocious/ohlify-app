@@ -11,10 +11,12 @@ class UpcomingCallsList extends StatelessWidget {
     super.key,
     required this.calls,
     required this.onViewAll,
+    required this.onTap,
   });
 
   final List<UpcomingCall> calls;
   final VoidCallback onViewAll;
+  final ValueChanged<UpcomingCall> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,10 @@ class UpcomingCallsList extends StatelessWidget {
               children: [
                 for (int i = 0; i < calls.length; i++) ...[
                   if (i > 0) const SizedBox(width: 12),
-                  _UpcomingCallCard(call: calls[i]),
+                  _UpcomingCallCard(
+                    call: calls[i],
+                    onTap: () => onTap(calls[i]),
+                  ),
                 ],
               ],
             ),
@@ -74,45 +79,50 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _UpcomingCallCard extends StatelessWidget {
-  const _UpcomingCallCard({required this.call});
+  const _UpcomingCallCard({required this.call, required this.onTap});
 
   final UpcomingCall call;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 180,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _Avatar(avatarUrl: call.avatarUrl),
-          const SizedBox(height: 16),
-          AppText(
-            call.name,
-            variant: AppTextVariant.body,
-            color: AppColors.textNavy,
-            align: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 1),
-          AppText(
-            call.role,
-            variant: AppTextVariant.bodyNormal,
-            color: AppColors.textMuted,
-            align: TextAlign.center,
-            weight: FontWeight.w500,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          const SizedBox(height: 12),
-          _RatingRow(rating: call.rating, reviewCount: call.reviewCount),
-        ],
+    return GestureDetector(
+      onTap: onTap,
+      behavior: HitTestBehavior.opaque,
+      child: Container(
+        width: 180,
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: AppColors.background,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _Avatar(avatarUrl: call.avatarUrl),
+            const SizedBox(height: 16),
+            AppText(
+              call.name,
+              variant: AppTextVariant.body,
+              color: AppColors.textNavy,
+              align: TextAlign.center,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 1),
+            AppText(
+              call.role,
+              variant: AppTextVariant.bodyNormal,
+              color: AppColors.textMuted,
+              align: TextAlign.center,
+              weight: FontWeight.w500,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 12),
+            _RatingRow(rating: call.rating, reviewCount: call.reviewCount),
+          ],
+        ),
       ),
     );
   }

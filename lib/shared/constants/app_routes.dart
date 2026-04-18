@@ -15,5 +15,15 @@ abstract final class AppRoutes {
   static const wallet = '/wallet';
   static const profile = '/profile';
 
+  static const scheduleCall = '/schedule-call';
+  static const professional = '/professional';
+  static const professionals = '/professionals';
+  static const call = '/call';
+
+  // Onboarding / professional setup
+  static const roleSelection = '/role-selection';
+  static const professionalKyc = '/professional-kyc';
+  static const professionalKycRates = '/professional-kyc/rates';
+
   static const componentPreview = '/component-preview';
 }

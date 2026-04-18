@@ -6,6 +6,7 @@ class Professional {
     required this.rating,
     required this.reviewCount,
     this.avatarUrl,
+    this.basePrice,
   });
 
   final String id;
@@ -14,4 +15,7 @@ class Professional {
   final double rating;
   final int reviewCount;
   final String? avatarUrl;
+
+  /// Starting price in NGN (whole naira). Used for sorting in search.
+  final num? basePrice;
 }

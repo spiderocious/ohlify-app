@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:ohlify/shared/notifiers/modal_notifier.dart';
 import 'package:ohlify/ui/widgets/app_confirmation_modal/app_confirmation_modal.dart';
+import 'package:ohlify/ui/widgets/app_custom_modal/app_custom_modal.dart';
 import 'package:ohlify/ui/widgets/app_feedback_modal/app_feedback_modal.dart';
 import 'package:ohlify/ui/widgets/app_input_modal/app_input_modal.dart';
 
@@ -106,6 +107,7 @@ class _ModalStack extends StatelessWidget {
         final FeedbackModalEntry e => e.options.position,
         final ConfirmationModalEntry e => e.options.position,
         final InputModalEntry e => e.options.position,
+        final CustomModalEntry e => e.options.position,
         _ => ModalPosition.center,
       };
 
@@ -113,6 +115,7 @@ class _ModalStack extends StatelessWidget {
         final FeedbackModalEntry e => e.options.barrierColor,
         final ConfirmationModalEntry e => e.options.barrierColor,
         final InputModalEntry e => e.options.barrierColor,
+        final CustomModalEntry e => e.options.barrierColor,
         _ => null,
       };
 
@@ -120,6 +123,7 @@ class _ModalStack extends StatelessWidget {
         final FeedbackModalEntry e => e.options.dismissible,
         final ConfirmationModalEntry e => e.options.dismissible,
         final InputModalEntry e => e.options.dismissible,
+        final CustomModalEntry e => e.options.dismissible,
         _ => true,
       };
 
@@ -135,6 +139,8 @@ class _ModalStack extends StatelessWidget {
         AppConfirmationModal(entry: e, onDismiss: onDismiss, isFullscreen: isFullscreen),
       final InputModalEntry e =>
         AppInputModal(entry: e, onDismiss: onDismiss, isFullscreen: isFullscreen),
+      final CustomModalEntry e =>
+        AppCustomModal(entry: e, onDismiss: onDismiss, isFullscreen: isFullscreen),
       _ => const SizedBox.shrink(),
     };
   }

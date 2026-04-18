@@ -11,6 +11,9 @@ class AppSearchBar extends StatelessWidget {
     this.onChanged,
     this.onTap,
     this.readOnly = false,
+    this.autofocus = false,
+    this.focusNode,
+    this.controller,
   });
 
   final String placeholder;
@@ -20,6 +23,10 @@ class AppSearchBar extends StatelessWidget {
   /// When true the field is not editable — tapping fires [onTap] instead.
   /// Useful for navigating to a dedicated search screen.
   final bool readOnly;
+
+  final bool autofocus;
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +43,9 @@ class AppSearchBar extends StatelessWidget {
             color: AppColors.textMuted,
           ),
           onChanged: onChanged,
+          autofocus: autofocus,
+          focusNode: focusNode,
+          controller: controller,
         ),
       ),
     );

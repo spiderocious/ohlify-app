@@ -126,25 +126,32 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final button = AnimatedOpacity(
+    Widget container = Container(
+      width: expanded ? double.infinity : width,
+      height: height,
+      decoration: BoxDecoration(
+        color: _backgroundColor,
+        borderRadius: BorderRadius.circular(radius),
+        border: _border,
+      ),
+      child: child != null ? _wrapChild(child!) : _buildLabelContent(),
+    );
+
+    // When no explicit width/expanded is set, wrap in IntrinsicWidth so the
+    // container sizes to its (padded) label rather than collapsing or
+    // expanding to fill the parent's unbounded width in a Row.
+    if (!expanded && width == null) {
+      container = IntrinsicWidth(child: container);
+    }
+
+    return AnimatedOpacity(
       opacity: _effectivelyDisabled ? 0.45 : 1.0,
       duration: const Duration(milliseconds: 150),
       child: GestureDetector(
         onTap: _effectivelyDisabled ? null : onPressed,
-        child: Container(
-          width: expanded ? double.infinity : width,
-          height: height,
-          decoration: BoxDecoration(
-            color: _backgroundColor,
-            borderRadius: BorderRadius.circular(radius),
-            border: _border,
-          ),
-          child: child != null ? _wrapChild(child!) : _buildLabelContent(),
-        ),
+        child: container,
       ),
     );
-
-    return button;
   }
 
   Widget _wrapChild(Widget inner) {
@@ -170,12 +177,17 @@ class AppButton extends StatelessWidget {
       ),
     );
 
-    // No icons — centered label
+    // No icons — centered label with horizontal padding so the button
+    // has breathing room around the text (critical when sized intrinsically).
     if (startIcon == null && endIcon == null) {
-      return Center(
-        child: isLoading
-            ? loadingIndicator
-            : Text(label!, style: effectiveStyle),
+      return Padding(
+        padding: padding ?? const EdgeInsets.symmetric(horizontal: 16),
+        child: Center(
+          widthFactor: 1,
+          child: isLoading
+              ? loadingIndicator
+              : Text(label!, style: effectiveStyle),
+        ),
       );
     }
 

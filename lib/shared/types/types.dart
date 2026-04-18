@@ -9,3 +9,7 @@ export 'package:ohlify/shared/types/scheduled_call_item.dart';
 export 'package:ohlify/shared/types/completed_call_item.dart';
 export 'package:ohlify/shared/types/wallet_stats.dart';
 export 'package:ohlify/shared/types/transaction.dart';
+export 'package:ohlify/shared/types/professional_rate.dart';
+export 'package:ohlify/shared/types/review.dart';
+export 'package:ohlify/shared/types/call_detail.dart';
+export 'package:ohlify/shared/types/role.dart';

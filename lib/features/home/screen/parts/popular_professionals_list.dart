@@ -11,11 +11,13 @@ class PopularProfessionalsList extends StatelessWidget {
     required this.professionals,
     required this.onViewAll,
     required this.onSchedule,
+    required this.onTap,
   });
 
   final List<Professional> professionals;
   final VoidCallback onViewAll;
   final ValueChanged<Professional> onSchedule;
+  final ValueChanged<Professional> onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +60,7 @@ class PopularProfessionalsList extends StatelessWidget {
               reviewCount: pro.reviewCount,
               imageUrl: pro.avatarUrl,
               onSchedule: () => onSchedule(pro),
+              onTap: () => onTap(pro),
             );
           },
         ),

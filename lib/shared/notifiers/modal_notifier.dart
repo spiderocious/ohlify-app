@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 
 // ── Shared enums ──────────────────────────────────────────────────────────────
 
-enum ModalType { feedback, confirmation, input }
+enum ModalType { feedback, confirmation, input, custom }
 
 enum ModalFeedbackKind { success, error, warning, info }
 
@@ -159,6 +159,20 @@ class InputModalOptions {
 
 enum InputModalInputType { text, number, email, password }
 
+class CustomModalOptions {
+  const CustomModalOptions({
+    this.position = ModalPosition.center,
+    this.dismissible = true,
+    this.showCloseButton = true,
+    this.barrierColor,
+  });
+
+  final ModalPosition position;
+  final bool dismissible;
+  final bool showCloseButton;
+  final Color? barrierColor;
+}
+
 // ── Entry & Notifier ──────────────────────────────────────────────────────────
 
 abstract class ModalEntry {
@@ -204,6 +218,23 @@ class InputModalEntry extends ModalEntry {
   String title;
   String message;
   InputModalOptions options;
+}
+
+class CustomModalEntry extends ModalEntry {
+  CustomModalEntry({
+    required super.id,
+    required this.title,
+    required this.builder,
+    required this.options,
+  }) : super(type: ModalType.custom);
+
+  String title;
+
+  /// Builds the body content. Receives [onDismiss] so the builder can close
+  /// the modal from within (e.g. after submitting a form).
+  final Widget Function(BuildContext context, VoidCallback onDismiss) builder;
+
+  CustomModalOptions options;
 }
 
 // ── Completer wrapper ─────────────────────────────────────────────────────────
@@ -293,6 +324,19 @@ class ModalNotifier extends ChangeNotifier {
       id: _newId(),
       title: title,
       message: message,
+      options: options,
+    ));
+  }
+
+  ModalCompleter addCustom(
+    String title,
+    Widget Function(BuildContext context, VoidCallback onDismiss) builder,
+    CustomModalOptions options,
+  ) {
+    return _push(CustomModalEntry(
+      id: _newId(),
+      title: title,
+      builder: builder,
       options: options,
     ));
   }

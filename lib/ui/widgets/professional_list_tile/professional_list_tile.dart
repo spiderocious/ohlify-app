@@ -91,7 +91,7 @@ class ProfessionalListTile extends StatelessWidget {
               label: 'Schedule call',
               onPressed: onSchedule,
               radius: 100,
-              width: 93,
+              width: 100,
               height: 32,
               textStyle: const TextStyle(fontSize: 10, fontWeight: FontWeight.w500),
             ),
