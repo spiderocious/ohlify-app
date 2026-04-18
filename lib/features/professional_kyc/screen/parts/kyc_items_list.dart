@@ -14,7 +14,6 @@ import 'package:ohlify/shared/constants/app_routes.dart';
 import 'package:ohlify/shared/helpers/mask_account_number.dart';
 import 'package:ohlify/shared/notifiers/modal_notifier.dart';
 import 'package:ohlify/shared/notifiers/toast_notifier.dart';
-import 'package:ohlify/shared/services/drawer_service.dart';
 import 'package:ohlify/shared/services/services.dart';
 
 class KycItemsList extends StatelessWidget {

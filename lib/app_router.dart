@@ -39,6 +39,8 @@ final GoRouter appRouter = GoRouter(
     ...professionalDetailsRoutes,
     ...professionalSearchRoutes,
     ...callDetailsRoutes,
+    ...roleSelectionRoutes,
+    ...professionalKycRoutes,
     ...componentPreviewRoutes,
 
     // ── Main app shell (persistent bottom nav) ─────────────────────────────

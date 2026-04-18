@@ -8,7 +8,6 @@ import 'package:ohlify/features/professional_kyc/screen/parts/rates_group.dart';
 import 'package:ohlify/features/professional_kyc/types/kyc_rate.dart';
 import 'package:ohlify/shared/notifiers/modal_notifier.dart';
 import 'package:ohlify/shared/notifiers/toast_notifier.dart';
-import 'package:ohlify/shared/services/drawer_service.dart';
 import 'package:ohlify/shared/services/services.dart';
 import 'package:ohlify/shared/types/scheduled_call_item.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
