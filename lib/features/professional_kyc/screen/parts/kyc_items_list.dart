@@ -3,18 +3,19 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import 'package:ohlify/features/professional_kyc/providers/professional_kyc_notifier.dart';
-import 'package:ohlify/features/professional_kyc/screen/parts/bank_account_modal_content.dart';
 import 'package:ohlify/features/professional_kyc/screen/parts/identity_modal_content.dart';
-import 'package:ohlify/features/professional_kyc/screen/parts/interests_modal_content.dart';
 import 'package:ohlify/features/professional_kyc/screen/parts/kyc_item_tile.dart';
-import 'package:ohlify/features/professional_kyc/screen/parts/occupation_modal_content.dart';
 import 'package:ohlify/features/professional_kyc/types/identity_details.dart';
 import 'package:ohlify/features/professional_kyc/types/kyc_item.dart';
 import 'package:ohlify/shared/constants/app_routes.dart';
 import 'package:ohlify/shared/helpers/mask_account_number.dart';
+import 'package:ohlify/shared/types/bank_details.dart';
 import 'package:ohlify/shared/notifiers/modal_notifier.dart';
 import 'package:ohlify/shared/notifiers/toast_notifier.dart';
 import 'package:ohlify/shared/services/services.dart';
+import 'package:ohlify/ui/widgets/bank_account_form/bank_account_form.dart';
+import 'package:ohlify/ui/widgets/interests_form/interests_form.dart';
+import 'package:ohlify/ui/widgets/occupation_form/occupation_form.dart';
 
 class KycItemsList extends StatelessWidget {
   const KycItemsList({super.key});
@@ -77,23 +78,31 @@ class KycItemsList extends StatelessWidget {
   }
 
   void _openOccupation(ProfessionalKycNotifier notifier) {
+    String? pendingValue;
     DrawerHandle? handle;
     handle = DrawerService.instance.showCustomModal(
       'Occupation',
-      (_, _) => OccupationModalContent(
+      (_, _) => OccupationForm(
         initialValue: notifier.occupation,
         onSave: (value) {
-          notifier.setOccupation(value);
+          pendingValue = value;
           handle?.dismiss();
-          _toast('Occupation saved');
         },
       ),
       options: const CustomModalOptions(position: ModalPosition.center),
     );
+
+    handle.onDismissed.then((_) {
+      final value = pendingValue;
+      if (value == null) return;
+      notifier.setOccupation(value);
+      _toast('Occupation saved');
+    });
   }
 
   void _openDescription(ProfessionalKycNotifier notifier) {
-    DrawerService.instance.showInputModal(
+    String? pendingValue;
+    final handle = DrawerService.instance.showInputModal(
       'Description',
       'Set your description, let people know what you do and who you are.',
       options: InputModalOptions(
@@ -103,67 +112,85 @@ class KycItemsList extends StatelessWidget {
         defaultValue: notifier.description,
         confirmButtonText: 'Save',
         showCancelButton: false,
-        onConfirm: (value) {
-          notifier.setDescription(value.trim());
-          _toast('Description saved');
-        },
+        onConfirm: (value) => pendingValue = value.trim(),
       ),
     );
+
+    handle.onDismissed.then((_) {
+      final value = pendingValue;
+      if (value == null) return;
+      notifier.setDescription(value);
+      _toast('Description saved');
+    });
   }
 
   void _openInterests(ProfessionalKycNotifier notifier) {
+    List<String>? pendingValues;
     DrawerHandle? handle;
     handle = DrawerService.instance.showCustomModal(
       'Interests',
-      (_, _) => InterestsModalContent(
+      (_, _) => InterestsForm(
         initialInterests: notifier.interests,
         onSave: (values) {
-          for (final existing in notifier.interests) {
-            if (!values.contains(existing)) {
-              notifier.removeInterest(existing);
-            }
-          }
-          for (final v in values) {
-            notifier.addInterest(v);
-          }
+          pendingValues = values;
           handle?.dismiss();
-          _toast('Interests saved');
         },
       ),
       options: const CustomModalOptions(position: ModalPosition.center),
     );
+
+    handle.onDismissed.then((_) {
+      final values = pendingValues;
+      if (values == null) return;
+      notifier.setInterests(values);
+      _toast('Interests saved');
+    });
   }
 
   void _openBankAccount(ProfessionalKycNotifier notifier) {
+    BankDetails? pendingDetails;
     DrawerHandle? handle;
     handle = DrawerService.instance.showCustomModal(
       'Add bank account',
-      (_, _) => BankAccountModalContent(
+      (_, _) => BankAccountForm(
         initial: notifier.bankAccount,
         onSave: (details) {
-          notifier.setBankAccount(details);
+          pendingDetails = details;
           handle?.dismiss();
-          _toast('Bank account saved');
         },
       ),
       options: const CustomModalOptions(position: ModalPosition.center),
     );
+
+    handle.onDismissed.then((_) {
+      final details = pendingDetails;
+      if (details == null) return;
+      notifier.setBankAccount(details);
+      _toast('Bank account saved');
+    });
   }
 
   void _openIdentity(ProfessionalKycNotifier notifier) {
+    IdentityDetails? pendingDetails;
     DrawerHandle? handle;
     handle = DrawerService.instance.showCustomModal(
       'Identity verification',
       (_, _) => IdentityModalContent(
         initial: notifier.identity,
         onSave: (details) {
-          notifier.setIdentity(details);
+          pendingDetails = details;
           handle?.dismiss();
-          _toast('Identity submitted');
         },
       ),
       options: const CustomModalOptions(position: ModalPosition.center),
     );
+
+    handle.onDismissed.then((_) {
+      final details = pendingDetails;
+      if (details == null) return;
+      notifier.setIdentity(details);
+      _toast('Identity submitted');
+    });
   }
 
   void _toast(String message) {

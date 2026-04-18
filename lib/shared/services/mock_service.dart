@@ -311,6 +311,25 @@ abstract final class MockService {
     return const CallStats(total: 47, thisMonth: 47, thisWeek: 18);
   }
 
+  static Map<String, dynamic> getProfileSeed() {
+    return const {
+      'fullName': 'Adedeji Benson Bamidele',
+      'email': 'adedeji_fresh@gmail.com',
+      'phone': '0801 234 6789',
+      'description':
+          'Senior sales manager with 10+ years of experience helping founders pitch better and close more deals.',
+      'occupation': 'Software engineer',
+      'interests': <String>['Relationship', 'Technology', 'Entertainment'],
+      'bankAccount': {
+        'accountNumber': '9654519113',
+        'bankName': 'Moniepoint MFB',
+        'accountName': 'Adekunle Ifeanyi Musa',
+      },
+      'smsNotifications': false,
+      'emailNotifications': true,
+    };
+  }
+
   static List<AppNotification> getNotifications() {
     return const [
       AppNotification(

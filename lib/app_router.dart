@@ -13,6 +13,7 @@ import 'package:ohlify/features/professional_details/professional_details_routes
 import 'package:ohlify/features/professional_kyc/professional_kyc_routes.dart';
 import 'package:ohlify/features/professional_search/professional_search_routes.dart';
 import 'package:ohlify/features/role_selection/role_selection_routes.dart';
+import 'package:ohlify/features/profile/profile_routes.dart';
 import 'package:ohlify/features/profile/screen/profile_screen.dart';
 import 'package:ohlify/features/register/register_routes.dart';
 import 'package:ohlify/features/schedule_call/schedule_call_routes.dart';
@@ -43,6 +44,7 @@ final GoRouter appRouter = GoRouter(
     ...roleSelectionRoutes,
     ...professionalKycRoutes,
     ...notificationsRoutes,
+    ...profileSubscreenRoutes,
     ...componentPreviewRoutes,
 
     // ── Main app shell (persistent bottom nav) ─────────────────────────────

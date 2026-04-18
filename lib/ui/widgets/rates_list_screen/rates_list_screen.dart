@@ -155,21 +155,28 @@ class RatesListScreen extends StatelessWidget {
   }
 
   void _openAddRate(BuildContext context) {
+    CallRate? pendingRate;
     DrawerHandle? handle;
     handle = DrawerService.instance.showCustomModal(
       'Add rate',
       (_, _) => AddRateForm(
         onSave: (rate) {
-          controller.addRate(rate);
+          pendingRate = rate;
           handle?.dismiss();
-          DrawerService.instance.toast(
-            'Rate added successfully',
-            options: const ToastOptions(type: ToastType.success),
-          );
         },
       ),
       options: const CustomModalOptions(position: ModalPosition.bottom),
     );
+
+    handle.onDismissed.then((_) {
+      final rate = pendingRate;
+      if (rate == null) return;
+      controller.addRate(rate);
+      DrawerService.instance.toast(
+        'Rate added successfully',
+        options: const ToastOptions(type: ToastType.success),
+      );
+    });
   }
 
   void _confirmDelete(BuildContext context, CallRate rate) {

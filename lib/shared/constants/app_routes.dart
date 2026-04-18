@@ -15,6 +15,17 @@ abstract final class AppRoutes {
   static const wallet = '/wallet';
   static const profile = '/profile';
 
+  // Profile sub-screens
+  static const profilePersonalInfo = '/profile/personal-info';
+  static const profileRates = '/profile/rates';
+  static const profileBankAccount = '/profile/bank-account';
+  static const profileChangePassword = '/profile/change-password';
+  static const profileNotifications = '/profile/notifications';
+  static const profileHelpDesk = '/profile/help-desk';
+  static const profilePrivacyPolicy = '/profile/privacy-policy';
+  static const profileEula = '/profile/eula';
+  static const profileTerms = '/profile/terms';
+
   static const scheduleCall = '/schedule-call';
   static const professional = '/professional';
   static const professionals = '/professionals';

@@ -138,6 +138,8 @@ class ProfileMenu extends StatefulWidget {
     required this.onHelpDesk,
     required this.onPrivacyPolicy,
     required this.onEula,
+    required this.onTerms,
+    required this.onDeleteAccount,
     required this.onLogout,
   });
 
@@ -149,6 +151,8 @@ class ProfileMenu extends StatefulWidget {
   final VoidCallback onHelpDesk;
   final VoidCallback onPrivacyPolicy;
   final VoidCallback onEula;
+  final VoidCallback onTerms;
+  final VoidCallback onDeleteAccount;
   final VoidCallback onLogout;
 
   @override
@@ -225,11 +229,22 @@ class _ProfileMenuState extends State<ProfileMenu> {
               onTap: widget.onEula,
             ),
             _MenuRow.action(
+              icon: AppIcons.info,
+              label: 'Terms & conditions',
+              onTap: widget.onTerms,
+            ),
+            _MenuRow.action(
               icon: AppIcons.logout,
               label: 'Logout',
               onTap: widget.onLogout,
               iconColor: AppColors.danger,
-              labelColor: AppColors.textJet,
+            ),
+            _MenuRow.action(
+              icon: AppIcons.delete,
+              label: 'Delete account',
+              onTap: widget.onDeleteAccount,
+              iconColor: AppColors.danger,
+              labelColor: AppColors.danger,
             ),
           ],
         ),

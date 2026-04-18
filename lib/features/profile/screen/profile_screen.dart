@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import 'package:ohlify/features/profile/helpers/delete_account_flow.dart';
+import 'package:ohlify/features/profile/providers/profile_notifier.dart';
 import 'package:ohlify/features/profile/screen/parts/profile_link_card.dart';
 import 'package:ohlify/features/profile/screen/parts/profile_menu.dart';
+import 'package:ohlify/shared/constants/app_routes.dart';
+import 'package:ohlify/shared/notifiers/modal_notifier.dart';
+import 'package:ohlify/shared/services/services.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
-  // Mock — replace with provider data when auth is wired
-  static const _name = 'Adedeji Benson Bamidele';
   static const _profileUrl = 'www.ohlify.com/profile/seidu23';
 
   @override
   Widget build(BuildContext context) {
+    final profile = context.watch<ProfileNotifier>();
+
     return Scaffold(
       backgroundColor: AppColors.surfaceLight,
       body: SafeArea(
@@ -23,7 +30,7 @@ class ProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 12),
-              const _ProfileHeader(name: _name),
+              _ProfileHeader(name: profile.fullName),
               const SizedBox(height: 20),
               ProfileLinkCard(
                 profileUrl: _profileUrl,
@@ -31,15 +38,24 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: 28),
               ProfileMenu(
-                onPersonalInfo: () {},
-                onRates: () {},
-                onBankAccount: () {},
-                onChangePassword: () {},
-                onNotifications: () {},
-                onHelpDesk: () {},
-                onPrivacyPolicy: () {},
-                onEula: () {},
-                onLogout: () {},
+                onPersonalInfo: () =>
+                    context.push(AppRoutes.profilePersonalInfo),
+                onRates: () => context.push(AppRoutes.profileRates),
+                onBankAccount: () => context.push(AppRoutes.profileBankAccount),
+                onChangePassword: () =>
+                    context.push(AppRoutes.profileChangePassword),
+                onNotifications: () =>
+                    context.push(AppRoutes.profileNotifications),
+                onHelpDesk: () => context.push(AppRoutes.profileHelpDesk),
+                onPrivacyPolicy: () =>
+                    context.push(AppRoutes.profilePrivacyPolicy),
+                onEula: () => context.push(AppRoutes.profileEula),
+                onTerms: () => context.push(AppRoutes.profileTerms),
+                onDeleteAccount: () => startDeleteAccountFlow(
+                  context,
+                  emailForOtp: profile.email,
+                ),
+                onLogout: () => _confirmLogout(context),
               ),
               const SizedBox(height: 32),
             ],
@@ -47,6 +63,24 @@ class ProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _confirmLogout(BuildContext context) {
+    var confirmed = false;
+    final handle = DrawerService.instance.showConfirmationModal(
+      'Log out?',
+      'You will need to sign in again to book or receive calls.',
+      options: ConfirmationModalOptions(
+        kind: ModalConfirmationKind.warning,
+        confirmButtonText: 'Log out',
+        cancelButtonText: 'Stay signed in',
+        onConfirm: () => confirmed = true,
+      ),
+    );
+    handle.onDismissed.then((_) {
+      if (!confirmed || !context.mounted) return;
+      context.go(AppRoutes.login);
+    });
   }
 }
 
