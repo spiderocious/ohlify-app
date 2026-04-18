@@ -88,7 +88,7 @@ class KycItemsList extends StatelessWidget {
           _toast('Occupation saved');
         },
       ),
-      options: const CustomModalOptions(position: ModalPosition.bottom),
+      options: const CustomModalOptions(position: ModalPosition.center),
     );
   }
 
@@ -130,7 +130,7 @@ class KycItemsList extends StatelessWidget {
           _toast('Interests saved');
         },
       ),
-      options: const CustomModalOptions(position: ModalPosition.bottom),
+      options: const CustomModalOptions(position: ModalPosition.center),
     );
   }
 
@@ -146,7 +146,7 @@ class KycItemsList extends StatelessWidget {
           _toast('Bank account saved');
         },
       ),
-      options: const CustomModalOptions(position: ModalPosition.bottom),
+      options: const CustomModalOptions(position: ModalPosition.center),
     );
   }
 
@@ -162,7 +162,7 @@ class KycItemsList extends StatelessWidget {
           _toast('Identity submitted');
         },
       ),
-      options: const CustomModalOptions(position: ModalPosition.bottom),
+      options: const CustomModalOptions(position: ModalPosition.center),
     );
   }
 

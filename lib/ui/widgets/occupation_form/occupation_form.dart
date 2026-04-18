@@ -24,21 +24,28 @@ const _options = [
   DropdownOption(label: 'Other', value: _otherValue),
 ];
 
-class OccupationModalContent extends StatefulWidget {
-  const OccupationModalContent({
+/// Reusable occupation picker — dropdown of curated options with an
+/// "Other" free-text fallback. Call-sites wrap it in a modal or screen and
+/// provide [initialValue]/[onSave].
+class OccupationForm extends StatefulWidget {
+  const OccupationForm({
     super.key,
     required this.initialValue,
     required this.onSave,
+    this.description = 'Let your community and the public know what you do, so you are easy to find.',
+    this.submitLabel = 'Save',
   });
 
   final String? initialValue;
   final ValueChanged<String> onSave;
+  final String description;
+  final String submitLabel;
 
   @override
-  State<OccupationModalContent> createState() => _OccupationModalContentState();
+  State<OccupationForm> createState() => _OccupationFormState();
 }
 
-class _OccupationModalContentState extends State<OccupationModalContent> {
+class _OccupationFormState extends State<OccupationForm> {
   String? _selectedOption;
   String _otherText = '';
 
@@ -80,8 +87,8 @@ class _OccupationModalContentState extends State<OccupationModalContent> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const AppText(
-          'Let your community and the public know what you do, so you are easy to find.',
+        AppText(
+          widget.description,
           variant: AppTextVariant.body,
           color: AppColors.textMuted,
           align: TextAlign.start,
@@ -107,7 +114,7 @@ class _OccupationModalContentState extends State<OccupationModalContent> {
         ],
         const SizedBox(height: 20),
         AppButton(
-          label: 'Save',
+          label: widget.submitLabel,
           expanded: true,
           radius: 100,
           isDisabled: value == null,

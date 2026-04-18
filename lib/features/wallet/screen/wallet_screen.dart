@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ohlify/features/wallet/screen/parts/transaction_history_list.dart';
 import 'package:ohlify/features/wallet/screen/parts/wallet_balance_card.dart';
 import 'package:ohlify/features/wallet/screen/parts/wallet_stats_row.dart';
+import 'package:ohlify/features/wallet/screen/parts/withdraw_modal_content.dart';
+import 'package:ohlify/shared/notifiers/modal_notifier.dart';
 import 'package:ohlify/shared/services/services.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
@@ -35,7 +37,7 @@ class WalletScreen extends StatelessWidget {
               const SizedBox(height: 20),
               WalletBalanceCard(
                 balance: balance,
-                onWithdraw: () {},
+                onWithdraw: _openWithdraw,
               ),
               const SizedBox(height: 16),
               WalletStatsRow(stats: stats),
@@ -47,5 +49,33 @@ class WalletScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _openWithdraw() {
+    String? submittedAmount;
+    DrawerHandle? handle;
+    handle = DrawerService.instance.showCustomModal(
+      'Withdraw funds',
+      (_, _) => WithdrawModalContent(
+        onSubmit: (formatted) {
+          submittedAmount = formatted;
+          handle?.dismiss();
+        },
+      ),
+      options: const CustomModalOptions(position: ModalPosition.center),
+    );
+
+    handle.onDismissed.then((_) {
+      final amount = submittedAmount;
+      if (amount == null) return;
+      DrawerService.instance.showFeedbackModal(
+        'Withdrawal Request Submitted',
+        'You have successfully submitted a withdrawal request for the amount of $amount.',
+        options: const FeedbackModalOptions(
+          kind: ModalFeedbackKind.success,
+          showCloseButton: false,
+        ),
+      );
+    });
   }
 }

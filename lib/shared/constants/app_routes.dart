@@ -25,5 +25,7 @@ abstract final class AppRoutes {
   static const professionalKyc = '/professional-kyc';
   static const professionalKycRates = '/professional-kyc/rates';
 
+  static const notifications = '/notifications';
+
   static const componentPreview = '/component-preview';
 }

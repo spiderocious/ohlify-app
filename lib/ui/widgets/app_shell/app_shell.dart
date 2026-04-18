@@ -43,10 +43,13 @@ class AppShell extends StatelessWidget {
               preferredSize: const Size.fromHeight(64),
               child: SafeArea(
                 bottom: false,
-                child: AppHeader(
-                  notificationCount: 1,
-                  onCopyLink: () {},
-                  onNotification: () {},
+                child: Builder(
+                  builder: (ctx) => AppHeader(
+                    notificationCount: 1,
+                    onCopyLink: () {},
+                    onNotification: () =>
+                        ctx.push(AppRoutes.notifications),
+                  ),
                 ),
               ),
             )

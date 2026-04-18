@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:ohlify/features/professional_kyc/types/bank_details.dart';
+import 'package:ohlify/shared/types/bank_details.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_button/app_button.dart';
 import 'package:ohlify/ui/widgets/app_dropdown_input/app_dropdown_input.dart';
@@ -18,22 +18,30 @@ const _banks = [
   DropdownOption(label: 'First Bank', value: 'First Bank'),
 ];
 
-class BankAccountModalContent extends StatefulWidget {
-  const BankAccountModalContent({
+class BankAccountForm extends StatefulWidget {
+  const BankAccountForm({
     super.key,
     required this.initial,
     required this.onSave,
+    this.description = 'Adding your bank account will affect where you receive your payouts.',
+    this.submitLabel = 'Save',
+    this.resolvedAccountName,
   });
 
   final BankDetails? initial;
   final ValueChanged<BankDetails> onSave;
+  final String description;
+  final String submitLabel;
+
+  /// When provided, the resolved account name is shown under the bank
+  /// dropdown as a read-only preview.
+  final String? resolvedAccountName;
 
   @override
-  State<BankAccountModalContent> createState() =>
-      _BankAccountModalContentState();
+  State<BankAccountForm> createState() => _BankAccountFormState();
 }
 
-class _BankAccountModalContentState extends State<BankAccountModalContent> {
+class _BankAccountFormState extends State<BankAccountForm> {
   late String _accountNumber;
   String? _bankName;
 
@@ -55,8 +63,8 @@ class _BankAccountModalContentState extends State<BankAccountModalContent> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const AppText(
-          'Adding your bank account will affect where you receive your payouts.',
+        AppText(
+          widget.description,
           variant: AppTextVariant.body,
           color: AppColors.textMuted,
           align: TextAlign.start,
@@ -81,9 +89,25 @@ class _BankAccountModalContentState extends State<BankAccountModalContent> {
           searchable: true,
           onChanged: (v) => setState(() => _bankName = v),
         ),
+        if (widget.resolvedAccountName != null) ...[
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            decoration: BoxDecoration(
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: AppText(
+              widget.resolvedAccountName!,
+              variant: AppTextVariant.body,
+              color: AppColors.textSlate,
+              align: TextAlign.start,
+            ),
+          ),
+        ],
         const SizedBox(height: 20),
         AppButton(
-          label: 'Save',
+          label: widget.submitLabel,
           expanded: true,
           radius: 100,
           isDisabled: !_isValid,
@@ -93,6 +117,8 @@ class _BankAccountModalContentState extends State<BankAccountModalContent> {
                     BankDetails(
                       accountNumber: _accountNumber,
                       bankName: _bankName!,
+                      accountName: widget.resolvedAccountName ??
+                          widget.initial?.accountName,
                     ),
                   ),
         ),

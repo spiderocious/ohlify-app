@@ -42,7 +42,9 @@ class _AppDropdownInputState<T> extends State<AppDropdownInput<T>> {
   DropdownOption<T>? _selected;
   bool _open = false;
   String _search = '';
+  double _targetWidth = 0;
   final LayerLink _layerLink = LayerLink();
+  final GlobalKey _targetKey = GlobalKey();
   OverlayEntry? _overlayEntry;
   final _searchController = TextEditingController();
 
@@ -71,12 +73,15 @@ class _AppDropdownInputState<T> extends State<AppDropdownInput<T>> {
 
   void _toggleDropdown() {
     if (widget.disabled) return;
-    setState(() => _open = !_open);
     if (_open) {
-      _showOverlay();
-    } else {
+      setState(() => _open = false);
       _removeOverlay();
+      return;
     }
+    final box = _targetKey.currentContext?.findRenderObject() as RenderBox?;
+    _targetWidth = box?.size.width ?? 0;
+    setState(() => _open = true);
+    _showOverlay();
   }
 
   void _closeDropdown() {
@@ -99,6 +104,7 @@ class _AppDropdownInputState<T> extends State<AppDropdownInput<T>> {
     _overlayEntry = OverlayEntry(
       builder: (_) => _DropdownOverlay(
         layerLink: _layerLink,
+        width: _targetWidth,
         options: widget.options,
         selected: _selected,
         searchable: widget.searchable,
@@ -144,6 +150,7 @@ class _AppDropdownInputState<T> extends State<AppDropdownInput<T>> {
           child: GestureDetector(
             onTap: _toggleDropdown,
             child: AnimatedContainer(
+              key: _targetKey,
               duration: const Duration(milliseconds: 150),
               height: 52,
               decoration: BoxDecoration(
@@ -201,6 +208,7 @@ class _AppDropdownInputState<T> extends State<AppDropdownInput<T>> {
 class _DropdownOverlay<T> extends StatefulWidget {
   const _DropdownOverlay({
     required this.layerLink,
+    required this.width,
     required this.options,
     required this.selected,
     required this.searchable,
@@ -212,6 +220,7 @@ class _DropdownOverlay<T> extends StatefulWidget {
   });
 
   final LayerLink layerLink;
+  final double width;
   final List<DropdownOption<T>> options;
   final DropdownOption<T>? selected;
   final bool searchable;
@@ -247,10 +256,13 @@ class _DropdownOverlayState<T> extends State<_DropdownOverlay<T>> {
         CompositedTransformFollower(
           link: widget.layerLink,
           showWhenUnlinked: false,
-          offset: const Offset(0, 56),
+          targetAnchor: Alignment.bottomLeft,
+          followerAnchor: Alignment.topLeft,
+          offset: const Offset(0, 6),
           child: Material(
             color: Colors.transparent,
             child: Container(
+              width: widget.width > 0 ? widget.width : null,
               constraints: const BoxConstraints(maxHeight: 240),
               decoration: BoxDecoration(
                 color: AppColors.background,
@@ -272,7 +284,6 @@ class _DropdownOverlayState<T> extends State<_DropdownOverlay<T>> {
                       padding: const EdgeInsets.all(8),
                       child: TextField(
                         controller: widget.searchController,
-                        autofocus: true,
                         style: const TextStyle(fontFamily: 'MonaSans', fontSize: 14),
                         decoration: InputDecoration(
                           hintText: 'Search...',

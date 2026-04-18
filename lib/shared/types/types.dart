@@ -13,3 +13,6 @@ export 'package:ohlify/shared/types/professional_rate.dart';
 export 'package:ohlify/shared/types/review.dart';
 export 'package:ohlify/shared/types/call_detail.dart';
 export 'package:ohlify/shared/types/role.dart';
+export 'package:ohlify/shared/types/app_notification.dart';
+export 'package:ohlify/shared/types/bank_details.dart';
+export 'package:ohlify/shared/types/call_rate.dart';

@@ -7,6 +7,7 @@ import 'package:ohlify/features/component_preview/component_preview_routes.dart'
 import 'package:ohlify/features/forgot_password/forgot_password_routes.dart';
 import 'package:ohlify/features/home/screen/home_screen.dart';
 import 'package:ohlify/features/login/login_routes.dart';
+import 'package:ohlify/features/notifications/notifications_routes.dart';
 import 'package:ohlify/features/onboarding/onboarding_routes.dart';
 import 'package:ohlify/features/professional_details/professional_details_routes.dart';
 import 'package:ohlify/features/professional_kyc/professional_kyc_routes.dart';
@@ -41,6 +42,7 @@ final GoRouter appRouter = GoRouter(
     ...callDetailsRoutes,
     ...roleSelectionRoutes,
     ...professionalKycRoutes,
+    ...notificationsRoutes,
     ...componentPreviewRoutes,
 
     // ── Main app shell (persistent bottom nav) ─────────────────────────────

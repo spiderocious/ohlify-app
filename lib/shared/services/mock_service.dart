@@ -311,6 +311,38 @@ abstract final class MockService {
     return const CallStats(total: 47, thisMonth: 47, thisWeek: 18);
   }
 
+  static List<AppNotification> getNotifications() {
+    return const [
+      AppNotification(
+        id: 'n-001',
+        kind: AppNotificationKind.missedCall,
+        title: 'Missed call',
+        message: 'Oops! You missed a call request from David Lee. They may try again.',
+        timeLabel: 'Today',
+        read: false,
+        route: '/call/cc-001',
+      ),
+      AppNotification(
+        id: 'n-002',
+        kind: AppNotificationKind.upcomingCall,
+        title: 'Upcoming call reminder',
+        message: 'You have a call with Robert Kim starting in 30 minutes',
+        timeLabel: '21 Feb. 2024',
+        read: false,
+        route: '/call/sc-001',
+      ),
+      AppNotification(
+        id: 'n-003',
+        kind: AppNotificationKind.paymentReceived,
+        title: 'Payment received',
+        message: 'You earned ₦30,000 from a call with John Doe.',
+        timeLabel: '3 hours ago',
+        read: true,
+        route: '/wallet',
+      ),
+    ];
+  }
+
   static List<Professional> getProfessionals() {
     return const [
       Professional(

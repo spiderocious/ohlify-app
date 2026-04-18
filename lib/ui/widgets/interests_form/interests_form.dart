@@ -21,21 +21,25 @@ const _interestOptions = [
   DropdownOption(label: 'Parenting', value: 'Parenting'),
 ];
 
-class InterestsModalContent extends StatefulWidget {
-  const InterestsModalContent({
+class InterestsForm extends StatefulWidget {
+  const InterestsForm({
     super.key,
     required this.initialInterests,
     required this.onSave,
+    this.description = 'Choose interests that allow us recommend you to people and to recommend people for you.',
+    this.submitLabel = 'Save',
   });
 
   final List<String> initialInterests;
   final ValueChanged<List<String>> onSave;
+  final String description;
+  final String submitLabel;
 
   @override
-  State<InterestsModalContent> createState() => _InterestsModalContentState();
+  State<InterestsForm> createState() => _InterestsFormState();
 }
 
-class _InterestsModalContentState extends State<InterestsModalContent> {
+class _InterestsFormState extends State<InterestsForm> {
   late List<String> _interests;
 
   @override
@@ -50,8 +54,8 @@ class _InterestsModalContentState extends State<InterestsModalContent> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const AppText(
-          'Choose interests that allow us recommend you to people and to recommend people for you.',
+        AppText(
+          widget.description,
           variant: AppTextVariant.body,
           color: AppColors.textMuted,
           align: TextAlign.start,
@@ -68,7 +72,7 @@ class _InterestsModalContentState extends State<InterestsModalContent> {
         ),
         const SizedBox(height: 20),
         AppButton(
-          label: 'Save',
+          label: widget.submitLabel,
           expanded: true,
           radius: 100,
           isDisabled: _interests.isEmpty,

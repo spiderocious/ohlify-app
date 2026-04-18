@@ -25,6 +25,7 @@ class ProfessionalKycRatesScreen extends StatelessWidget {
         notifier.rates.where((r) => r.callType == CallType.audio).toList();
     final video =
         notifier.rates.where((r) => r.callType == CallType.video).toList();
+    final hasRates = notifier.rates.isNotEmpty;
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -40,8 +41,11 @@ class ProfessionalKycRatesScreen extends StatelessWidget {
                     behavior: HitTestBehavior.opaque,
                     child: const Row(
                       children: [
-                        Icon(AppIcons.chevronLeft,
-                            size: 22, color: AppColors.textJet),
+                        Icon(
+                          AppIcons.chevronLeft,
+                          size: 22,
+                          color: AppColors.textJet,
+                        ),
                         SizedBox(width: 4),
                         AppText(
                           'Back',
@@ -75,22 +79,36 @@ class ProfessionalKycRatesScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    if (notifier.rates.isEmpty)
-                      const _EmptyState()
+                    if (!hasRates)
+                      _EmptyState(onAdd: () => _openAddRate(notifier))
                     else ...[
-                      RatesGroup(
-                        callType: CallType.audio,
-                        rates: audio,
-                        onDelete: (rate) =>
-                            _confirmDelete(context, notifier, rate),
-                      ),
-                      if (audio.isNotEmpty && video.isNotEmpty)
+                      if (audio.isNotEmpty) ...[
+                        RatesGroup(
+                          callType: CallType.audio,
+                          rates: audio,
+                          onDelete: (rate) => _confirmDelete(notifier, rate),
+                        ),
                         const SizedBox(height: 20),
-                      RatesGroup(
-                        callType: CallType.video,
-                        rates: video,
-                        onDelete: (rate) =>
-                            _confirmDelete(context, notifier, rate),
+                      ],
+                      if (video.isNotEmpty) ...[
+                        RatesGroup(
+                          callType: CallType.video,
+                          rates: video,
+                          onDelete: (rate) => _confirmDelete(notifier, rate),
+                        ),
+                        const SizedBox(height: 20),
+                      ],
+                      AppButton(
+                        label: 'Add rate',
+                        variant: AppButtonVariant.plain,
+                        startIcon: const Icon(
+                          Icons.add_rounded,
+                          size: 18,
+                          color: AppColors.primary,
+                        ),
+                        expanded: true,
+                        radius: 100,
+                        onPressed: () => _openAddRate(notifier),
                       ),
                     ],
                   ],
@@ -100,10 +118,11 @@ class ProfessionalKycRatesScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: AppButton(
-                label: 'Add rate',
+                label: 'Proceed',
                 expanded: true,
                 radius: 100,
-                onPressed: () => _openAddRate(notifier),
+                isDisabled: !hasRates,
+                onPressed: !hasRates ? null : () => context.pop(),
               ),
             ),
           ],
@@ -130,11 +149,7 @@ class ProfessionalKycRatesScreen extends StatelessWidget {
     );
   }
 
-  void _confirmDelete(
-    BuildContext context,
-    ProfessionalKycNotifier notifier,
-    KycRate rate,
-  ) {
+  void _confirmDelete(ProfessionalKycNotifier notifier, KycRate rate) {
     DrawerService.instance.showConfirmationModal(
       'Delete rate?',
       'Deleting rate would mean that no one would be able to see the rate on your profile.',
@@ -156,7 +171,9 @@ class ProfessionalKycRatesScreen extends StatelessWidget {
 }
 
 class _EmptyState extends StatelessWidget {
-  const _EmptyState();
+  const _EmptyState({required this.onAdd});
+
+  final VoidCallback onAdd;
 
   @override
   Widget build(BuildContext context) {
@@ -166,24 +183,38 @@ class _EmptyState extends StatelessWidget {
         color: AppColors.surfaceLight,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: const Column(
+      child: Column(
         children: [
-          Icon(Icons.payments_outlined,
-              size: 28, color: AppColors.textMuted),
-          SizedBox(height: 10),
-          AppText(
+          const Icon(
+            Icons.payments_outlined,
+            size: 28,
+            color: AppColors.textMuted,
+          ),
+          const SizedBox(height: 10),
+          const AppText(
             'No rates yet',
             variant: AppTextVariant.medium,
             color: AppColors.textJet,
             weight: FontWeight.w600,
             align: TextAlign.center,
           ),
-          SizedBox(height: 4),
-          AppText(
+          const SizedBox(height: 4),
+          const AppText(
             'Add your first rate to let clients book a call with you.',
             variant: AppTextVariant.body,
             color: AppColors.textMuted,
             align: TextAlign.center,
+          ),
+          const SizedBox(height: 16),
+          AppButton(
+            label: 'Add rate',
+            startIcon: const Icon(
+              Icons.add_rounded,
+              size: 18,
+              color: Colors.white,
+            ),
+            radius: 100,
+            onPressed: onAdd,
           ),
         ],
       ),

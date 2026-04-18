@@ -1,17 +1,19 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:ohlify/features/professional_kyc/types/bank_details.dart';
 import 'package:ohlify/features/professional_kyc/types/identity_details.dart';
 import 'package:ohlify/features/professional_kyc/types/kyc_item.dart';
-import 'package:ohlify/features/professional_kyc/types/kyc_rate.dart';
+import 'package:ohlify/shared/types/bank_details.dart';
+import 'package:ohlify/shared/types/call_rate.dart';
+import 'package:ohlify/shared/types/rates_controller.dart';
 
-class ProfessionalKycNotifier extends ChangeNotifier {
+class ProfessionalKycNotifier extends ChangeNotifier
+    implements RatesController {
   String? _occupation;
   String? _description;
   final List<String> _interests = [];
   BankDetails? _bankAccount;
   IdentityDetails? _identity;
-  final List<KycRate> _rates = [];
+  final List<CallRate> _rates = [];
   int _nextRateId = 1;
 
   String? get occupation => _occupation;
@@ -19,7 +21,9 @@ class ProfessionalKycNotifier extends ChangeNotifier {
   List<String> get interests => List.unmodifiable(_interests);
   BankDetails? get bankAccount => _bankAccount;
   IdentityDetails? get identity => _identity;
-  List<KycRate> get rates => List.unmodifiable(_rates);
+
+  @override
+  List<CallRate> get rates => List.unmodifiable(_rates);
 
   bool isComplete(KycItem item) => switch (item) {
         KycItem.occupation => _occupation != null && _occupation!.isNotEmpty,
@@ -49,6 +53,13 @@ class ProfessionalKycNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setInterests(List<String> values) {
+    _interests
+      ..clear()
+      ..addAll(values);
+    notifyListeners();
+  }
+
   void addInterest(String value) {
     final trimmed = value.trim();
     if (trimmed.isEmpty) return;
@@ -74,10 +85,9 @@ class ProfessionalKycNotifier extends ChangeNotifier {
 
   // ── Rates ─────────────────────────────────────────────────────────────────
 
-  void addRate({
-    required KycRate rate,
-  }) {
-    _rates.add(KycRate(
+  @override
+  void addRate(CallRate rate) {
+    _rates.add(CallRate(
       id: rate.id.isEmpty ? _generateRateId() : rate.id,
       callType: rate.callType,
       durationMinutes: rate.durationMinutes,
@@ -86,6 +96,7 @@ class ProfessionalKycNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  @override
   void removeRate(String id) {
     _rates.removeWhere((r) => r.id == id);
     notifyListeners();

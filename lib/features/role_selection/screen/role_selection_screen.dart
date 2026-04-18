@@ -24,7 +24,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
     final role = _selected;
     if (role == null) return;
 
-    DrawerService.instance.showConfirmationModal(
+    final confirmation = DrawerService.instance.showConfirmationModal(
       'Continue as ${role.label}?',
       role == Role.professional
           ? 'You will need to complete a short profile so clients can discover and book you.'
@@ -33,10 +33,20 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
         kind: ModalConfirmationKind.info,
         confirmButtonText: 'Yes, continue',
         cancelButtonText: 'Change',
-        onConfirm: () => _onConfirmed(role),
+        // Capture the confirm intent — wait for the modal to fully dismiss
+        // before pushing the feedback modal so they don't overlap.
+        onConfirm: () => _confirmed = true,
       ),
     );
+
+    confirmation.onDismissed.then((_) {
+      if (!_confirmed || !mounted) return;
+      _confirmed = false;
+      _onConfirmed(role);
+    });
   }
+
+  bool _confirmed = false;
 
   void _onConfirmed(Role role) {
     DrawerService.instance.showFeedbackModal(

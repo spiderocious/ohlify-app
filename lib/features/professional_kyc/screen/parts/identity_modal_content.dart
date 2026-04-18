@@ -1,6 +1,9 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ohlify/features/professional_kyc/types/identity_details.dart';
+import 'package:ohlify/shared/notifiers/toast_notifier.dart';
+import 'package:ohlify/shared/services/services.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_button/app_button.dart';
 import 'package:ohlify/ui/widgets/app_dropdown_input/app_dropdown_input.dart';
@@ -43,10 +46,24 @@ class _IdentityModalContentState extends State<IdentityModalContent> {
 
   bool get _isValid => _number.trim().isNotEmpty && _fileName != null;
 
-  void _pickFile() {
-    // Stubbed until a file-picker dependency is wired up. This still lets us
-    // prove out the flow end-to-end.
-    setState(() => _fileName = 'id_document.pdf');
+  Future<void> _pickFile() async {
+    try {
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: const ['pdf', 'jpg', 'jpeg', 'png', 'heic', 'webp'],
+        withData: false,
+      );
+      if (result == null || result.files.isEmpty) return;
+      final file = result.files.single;
+      if (!mounted) return;
+      setState(() => _fileName = file.name);
+    } on Object catch (e) {
+      if (!mounted) return;
+      DrawerService.instance.toast(
+        'Could not open file picker: $e',
+        options: const ToastOptions(type: ToastType.error),
+      );
+    }
   }
 
   @override
@@ -77,7 +94,7 @@ class _IdentityModalContentState extends State<IdentityModalContent> {
           onChanged: (v) => setState(() => _number = v),
         ),
         const SizedBox(height: 14),
-        _FilePickerField(fileName: _fileName, onPick: _pickFile),
+        _FilePickerField(fileName: _fileName, onPick: () => _pickFile()),
         const SizedBox(height: 20),
         AppButton(
           label: 'Save',
