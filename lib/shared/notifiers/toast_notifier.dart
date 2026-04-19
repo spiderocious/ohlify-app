@@ -114,4 +114,13 @@ class ToastNotifier extends ChangeNotifier {
 
   /// Called from the widget layer when the user taps Dismiss.
   void dismiss(String id) => _dismiss(id);
+
+  /// Dismiss every active toast.
+  void dismissAll() {
+    if (_toasts.isEmpty) return;
+    final ids = _toasts.map((t) => t.id).toList();
+    for (final id in ids) {
+      _dismiss(id);
+    }
+  }
 }

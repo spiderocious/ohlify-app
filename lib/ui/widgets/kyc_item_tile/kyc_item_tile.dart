@@ -1,32 +1,31 @@
 import 'package:flutter/material.dart';
 
-import 'package:ohlify/features/professional_kyc/types/kyc_item.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 
+/// Reusable setup row — icon tile, title, subtitle/summary, completion badge,
+/// and chevron. Features pass their own title/subtitle/icon so this widget
+/// stays decoupled from any KYC enum.
 class KycItemTile extends StatelessWidget {
   const KycItemTile({
     super.key,
-    required this.item,
+    required this.icon,
+    required this.title,
+    required this.subtitle,
     required this.completed,
-    required this.summary,
     required this.onTap,
   });
 
-  final KycItem item;
-  final bool completed;
-  final String? summary;
-  final VoidCallback onTap;
+  final IconData icon;
+  final String title;
 
-  IconData get _icon => switch (item) {
-        KycItem.occupation => Icons.work_outline_rounded,
-        KycItem.description => Icons.article_outlined,
-        KycItem.interests => Icons.interests_outlined,
-        KycItem.bankAccount => Icons.account_balance_outlined,
-        KycItem.identity => Icons.badge_outlined,
-        KycItem.rates => Icons.payments_outlined,
-      };
+  /// Short description. Features typically pass the filled value (e.g. the
+  /// current occupation) when completed, and a hint sentence otherwise.
+  final String subtitle;
+
+  final bool completed;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +47,7 @@ class KycItemTile extends StatelessWidget {
                 color: AppColors.surfaceDark,
                 borderRadius: BorderRadius.circular(14),
               ),
-              child: Icon(_icon, size: 20, color: AppColors.primary),
+              child: Icon(icon, size: 20, color: AppColors.primary),
             ),
             const SizedBox(width: 14),
             Expanded(
@@ -56,7 +55,7 @@ class KycItemTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   AppText(
-                    item.title,
+                    title,
                     variant: AppTextVariant.body,
                     color: AppColors.textJet,
                     weight: FontWeight.w600,
@@ -64,7 +63,7 @@ class KycItemTile extends StatelessWidget {
                   ),
                   const SizedBox(height: 2),
                   AppText(
-                    summary ?? item.subtitle,
+                    subtitle,
                     variant: AppTextVariant.bodyNormal,
                     color: AppColors.textMuted,
                     align: TextAlign.start,

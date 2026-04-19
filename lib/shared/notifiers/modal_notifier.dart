@@ -282,6 +282,15 @@ class ModalNotifier extends ChangeNotifier {
 
   void dismiss(String id) => _remove(id);
 
+  /// Dismiss every active modal in stack order (oldest first).
+  void dismissAll() {
+    if (_stack.isEmpty) return;
+    final ids = _stack.map((e) => e.id).toList();
+    for (final id in ids) {
+      _remove(id);
+    }
+  }
+
   String _newId() => 'modal_${_nextId++}';
 
   ModalCompleter addFeedback(

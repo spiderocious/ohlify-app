@@ -163,8 +163,8 @@ class _VerifyOtpScreenState extends State<VerifyOtpScreen> {
                         position: ModalPosition.fullscreen,
                         showCloseButton: false,
                         dismissible: false,
-                        confirmButtonText: 'Login',
-                        onConfirm: () => context.pushReplacement(AppRoutes.login),
+                        confirmButtonText: 'Continue',
+                        onConfirm: () => context.pushReplacement(AppRoutes.roleSelection),
                       ),
                     )
                 : null,

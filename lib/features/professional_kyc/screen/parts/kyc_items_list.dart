@@ -4,17 +4,17 @@ import 'package:provider/provider.dart';
 
 import 'package:ohlify/features/professional_kyc/providers/professional_kyc_notifier.dart';
 import 'package:ohlify/features/professional_kyc/screen/parts/identity_modal_content.dart';
-import 'package:ohlify/features/professional_kyc/screen/parts/kyc_item_tile.dart';
 import 'package:ohlify/features/professional_kyc/types/identity_details.dart';
 import 'package:ohlify/features/professional_kyc/types/kyc_item.dart';
 import 'package:ohlify/shared/constants/app_routes.dart';
 import 'package:ohlify/shared/helpers/mask_account_number.dart';
-import 'package:ohlify/shared/types/bank_details.dart';
 import 'package:ohlify/shared/notifiers/modal_notifier.dart';
 import 'package:ohlify/shared/notifiers/toast_notifier.dart';
 import 'package:ohlify/shared/services/services.dart';
+import 'package:ohlify/shared/types/bank_details.dart';
 import 'package:ohlify/ui/widgets/bank_account_form/bank_account_form.dart';
 import 'package:ohlify/ui/widgets/interests_form/interests_form.dart';
+import 'package:ohlify/ui/widgets/kyc_item_tile/kyc_item_tile.dart';
 import 'package:ohlify/ui/widgets/occupation_form/occupation_form.dart';
 
 class KycItemsList extends StatelessWidget {
@@ -29,9 +29,11 @@ class KycItemsList extends StatelessWidget {
         for (int i = 0; i < KycItem.values.length; i++) ...[
           if (i > 0) const SizedBox(height: 12),
           KycItemTile(
-            item: KycItem.values[i],
+            icon: _iconFor(KycItem.values[i]),
+            title: KycItem.values[i].title,
+            subtitle: _summaryFor(notifier, KycItem.values[i]) ??
+                KycItem.values[i].subtitle,
             completed: notifier.isComplete(KycItem.values[i]),
-            summary: _summaryFor(notifier, KycItem.values[i]),
             onTap: () => _openItem(context, notifier, KycItem.values[i]),
           ),
         ],
@@ -39,8 +41,19 @@ class KycItemsList extends StatelessWidget {
     );
   }
 
+  IconData _iconFor(KycItem item) => switch (item) {
+        KycItem.fullName => Icons.person_outline_rounded,
+        KycItem.occupation => Icons.work_outline_rounded,
+        KycItem.description => Icons.article_outlined,
+        KycItem.interests => Icons.interests_outlined,
+        KycItem.bankAccount => Icons.account_balance_outlined,
+        KycItem.identity => Icons.badge_outlined,
+        KycItem.rates => Icons.payments_outlined,
+      };
+
   String? _summaryFor(ProfessionalKycNotifier n, KycItem item) {
     return switch (item) {
+      KycItem.fullName => n.fullName,
       KycItem.occupation => n.occupation,
       KycItem.description => n.description,
       KycItem.interests =>
@@ -62,6 +75,8 @@ class KycItemsList extends StatelessWidget {
     KycItem item,
   ) {
     switch (item) {
+      case KycItem.fullName:
+        _openFullName(notifier);
       case KycItem.occupation:
         _openOccupation(notifier);
       case KycItem.description:
@@ -75,6 +90,28 @@ class KycItemsList extends StatelessWidget {
       case KycItem.rates:
         context.push(AppRoutes.professionalKycRates);
     }
+  }
+
+  void _openFullName(ProfessionalKycNotifier notifier) {
+    String? pendingValue;
+    final handle = DrawerService.instance.showInputModal(
+      'Full name',
+      'Enter your full legal name as it appears on ID.',
+      options: InputModalOptions(
+        placeholder: 'e.g. Adedeji Benson Bamidele',
+        defaultValue: notifier.fullName,
+        confirmButtonText: 'Save',
+        showCancelButton: false,
+        onConfirm: (value) => pendingValue = value.trim(),
+      ),
+    );
+
+    handle.onDismissed.then((_) {
+      final value = pendingValue;
+      if (value == null || value.isEmpty) return;
+      notifier.setFullName(value);
+      _toast('Full name saved');
+    });
   }
 
   void _openOccupation(ProfessionalKycNotifier notifier) {

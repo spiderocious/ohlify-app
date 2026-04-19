@@ -93,4 +93,19 @@ class DrawerService {
     final c = _modalNotifier!.addCustom(title, builder, options);
     return DrawerHandle._(onDismiss: c.dismiss, dismissed: c.dismissed);
   }
+
+  // ── Bulk dismiss ───────────────────────────────────────────────────────────
+
+  /// Dismiss every active modal and toast. Useful when navigating away from a
+  /// flow and you want a guaranteed clean slate.
+  void dismissAll() {
+    _modalNotifier?.dismissAll();
+    _toastNotifier?.dismissAll();
+  }
+
+  /// Dismiss every active modal (toasts untouched).
+  void dismissAllModals() => _modalNotifier?.dismissAll();
+
+  /// Dismiss every active toast (modals untouched).
+  void dismissAllToasts() => _toastNotifier?.dismissAll();
 }

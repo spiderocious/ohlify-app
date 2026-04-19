@@ -3,17 +3,22 @@ import 'package:flutter/material.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 
+/// Reusable KYC / setup progress card used by the professional and client
+/// onboarding flows. Shows a title, `X of Y steps done`, a percentage, and
+/// a linear progress bar.
 class KycProgressHeader extends StatelessWidget {
   const KycProgressHeader({
     super.key,
     required this.completed,
     required this.total,
     required this.percent,
+    this.title = 'Complete your profile',
   });
 
   final int completed;
   final int total;
   final int percent;
+  final String title;
 
   double get _ratio => total == 0 ? 0 : completed / total;
 
@@ -37,8 +42,8 @@ class KycProgressHeader extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const AppText(
-                      'Complete your profile',
+                    AppText(
+                      title,
                       variant: AppTextVariant.medium,
                       color: AppColors.textJet,
                       weight: FontWeight.w700,

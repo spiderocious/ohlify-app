@@ -94,8 +94,18 @@ class _ModalStack extends StatelessWidget {
       );
     }
 
+    // We wrap the body in a nested [Overlay] so descendant widgets that
+    // need one (e.g. dropdown popups, text-field magnifier) can still find
+    // `Overlay.of(context)` from inside a modal.
+    //
+    // Trick: keyed by the entry id so each new modal gets a *fresh* Overlay
+    // instance. Overlay only consumes `initialEntries` on first mount, so
+    // without the key it would hold onto the first modal forever and swallow
+    // every subsequent push (chained modals like "edit email → OTP" never
+    // appeared before this fix).
     return Positioned.fill(
       child: Overlay(
+        key: ValueKey('modal-overlay-${entry.id}'),
         initialEntries: [
           OverlayEntry(builder: (_) => body),
         ],

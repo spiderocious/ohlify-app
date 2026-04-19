@@ -8,6 +8,7 @@ import 'package:ohlify/shared/types/rates_controller.dart';
 
 class ProfessionalKycNotifier extends ChangeNotifier
     implements RatesController {
+  String? _fullName;
   String? _occupation;
   String? _description;
   final List<String> _interests = [];
@@ -16,6 +17,7 @@ class ProfessionalKycNotifier extends ChangeNotifier
   final List<CallRate> _rates = [];
   int _nextRateId = 1;
 
+  String? get fullName => _fullName;
   String? get occupation => _occupation;
   String? get description => _description;
   List<String> get interests => List.unmodifiable(_interests);
@@ -26,6 +28,7 @@ class ProfessionalKycNotifier extends ChangeNotifier
   List<CallRate> get rates => List.unmodifiable(_rates);
 
   bool isComplete(KycItem item) => switch (item) {
+        KycItem.fullName => _fullName != null && _fullName!.isNotEmpty,
         KycItem.occupation => _occupation != null && _occupation!.isNotEmpty,
         KycItem.description => _description != null && _description!.isNotEmpty,
         KycItem.interests => _interests.isNotEmpty,
@@ -42,6 +45,11 @@ class ProfessionalKycNotifier extends ChangeNotifier
   int get completionPercent => (completionRatio * 100).round();
 
   // ── Setters ───────────────────────────────────────────────────────────────
+
+  void setFullName(String value) {
+    _fullName = value;
+    notifyListeners();
+  }
 
   void setOccupation(String value) {
     _occupation = value;

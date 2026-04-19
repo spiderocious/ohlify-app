@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 
 import 'package:ohlify/features/professional_kyc/providers/professional_kyc_notifier.dart';
 import 'package:ohlify/features/professional_kyc/screen/parts/kyc_items_list.dart';
-import 'package:ohlify/features/professional_kyc/screen/parts/kyc_progress_header.dart';
 import 'package:ohlify/features/professional_kyc/types/kyc_item.dart';
 import 'package:ohlify/shared/constants/app_routes.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
@@ -12,6 +11,7 @@ import 'package:ohlify/ui/theme/app_colors.dart';
 import 'package:ohlify/ui/widgets/app_button/app_button.dart';
 import 'package:ohlify/ui/widgets/app_icon_button/app_icon_button.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
+import 'package:ohlify/ui/widgets/kyc_progress_header/kyc_progress_header.dart';
 
 class ProfessionalKycScreen extends StatelessWidget {
   const ProfessionalKycScreen({super.key});

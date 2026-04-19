@@ -1,4 +1,5 @@
 enum KycItem {
+  fullName,
   occupation,
   description,
   interests,
@@ -9,6 +10,7 @@ enum KycItem {
 
 extension KycItemDisplay on KycItem {
   String get title => switch (this) {
+        KycItem.fullName => 'Full name',
         KycItem.occupation => 'Occupation',
         KycItem.description => 'Description',
         KycItem.interests => 'Interests',
@@ -18,6 +20,7 @@ extension KycItemDisplay on KycItem {
       };
 
   String get subtitle => switch (this) {
+        KycItem.fullName => 'Enter your full legal name as it appears on ID.',
         KycItem.occupation =>
           'Let clients know what you do so you are easy to find.',
         KycItem.description => 'A short intro about who you are and how you help.',
