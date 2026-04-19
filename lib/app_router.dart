@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:ohlify/features/call_details/call_details_routes.dart';
+import 'package:ohlify/features/call_session/call_session_routes.dart';
 import 'package:ohlify/features/calls/screen/calls_screen.dart';
+import 'package:ohlify/features/client_kyc/client_kyc_routes.dart';
 import 'package:ohlify/features/component_preview/component_preview_routes.dart';
 import 'package:ohlify/features/forgot_password/forgot_password_routes.dart';
 import 'package:ohlify/features/home/screen/home_screen.dart';
@@ -41,8 +43,10 @@ final GoRouter appRouter = GoRouter(
     ...professionalDetailsRoutes,
     ...professionalSearchRoutes,
     ...callDetailsRoutes,
+    ...callSessionRoutes,
     ...roleSelectionRoutes,
     ...professionalKycRoutes,
+    ...clientKycRoutes,
     ...notificationsRoutes,
     ...profileSubscreenRoutes,
     ...componentPreviewRoutes,

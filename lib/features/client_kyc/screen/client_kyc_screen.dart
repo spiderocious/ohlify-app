@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import 'package:ohlify/features/professional_kyc/providers/professional_kyc_notifier.dart';
-import 'package:ohlify/features/professional_kyc/screen/parts/kyc_items_list.dart';
-import 'package:ohlify/features/professional_kyc/types/kyc_item.dart';
+import 'package:ohlify/features/client_kyc/providers/client_kyc_notifier.dart';
+import 'package:ohlify/features/client_kyc/screen/parts/client_kyc_items_list.dart';
+import 'package:ohlify/features/client_kyc/types/client_kyc_item.dart';
 import 'package:ohlify/shared/constants/app_routes.dart';
 import 'package:ohlify/ui/icons/app_icons.dart';
 import 'package:ohlify/ui/theme/app_colors.dart';
@@ -13,13 +13,14 @@ import 'package:ohlify/ui/widgets/app_icon_button/app_icon_button.dart';
 import 'package:ohlify/ui/widgets/app_text/app_text.dart';
 import 'package:ohlify/ui/widgets/kyc_progress_header/kyc_progress_header.dart';
 
-class ProfessionalKycScreen extends StatelessWidget {
-  const ProfessionalKycScreen({super.key});
+class ClientKycScreen extends StatelessWidget {
+  const ClientKycScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.watch<ProfessionalKycNotifier>();
-    final allDone = notifier.completedCount == KycItem.values.length;
+    final notifier = context.watch<ClientKycNotifier>();
+    final allDone =
+        notifier.completedCount == ClientKycItem.values.length;
 
     return Scaffold(
       backgroundColor: AppColors.surfaceLight,
@@ -39,7 +40,7 @@ class ProfessionalKycScreen extends StatelessWidget {
                   ),
                   const SizedBox(width: 12),
                   const AppText(
-                    'Become a Professional',
+                    'Set up your profile',
                     variant: AppTextVariant.header,
                     color: AppColors.textJet,
                     weight: FontWeight.w700,
@@ -56,7 +57,7 @@ class ProfessionalKycScreen extends StatelessWidget {
                   children: [
                     KycProgressHeader(
                       completed: notifier.completedCount,
-                      total: KycItem.values.length,
+                      total: ClientKycItem.values.length,
                       percent: notifier.completionPercent,
                     ),
                     const SizedBox(height: 20),
@@ -67,7 +68,7 @@ class ProfessionalKycScreen extends StatelessWidget {
                       align: TextAlign.start,
                     ),
                     const SizedBox(height: 10),
-                    const KycItemsList(),
+                    const ClientKycItemsList(),
                   ],
                 ),
               ),

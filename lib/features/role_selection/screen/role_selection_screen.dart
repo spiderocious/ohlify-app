@@ -59,15 +59,13 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
         position: ModalPosition.fullscreen,
         showCloseButton: false,
         dismissible: false,
-        confirmButtonText: role == Role.professional
-            ? 'Complete my profile'
-            : 'Go to home',
+        confirmButtonText: 'Complete my profile',
         onConfirm: () {
           if (!mounted) return;
           context.go(
             role == Role.professional
                 ? AppRoutes.professionalKyc
-                : AppRoutes.home,
+                : AppRoutes.clientKyc,
           );
         },
       ),

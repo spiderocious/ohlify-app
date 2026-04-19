@@ -61,6 +61,14 @@ class _ModalStack extends StatelessWidget {
         ModalPosition.fullscreen => Alignment.center,
       };
 
+      final viewInsets = MediaQuery.viewInsetsOf(context);
+      // Reserve space at the bottom equal to the keyboard height so the
+      // modal lives above the keyboard regardless of its anchor. A small
+      // gap is added for bottom-anchored modals so they don't sit flush to
+      // the keyboard top edge.
+      final bottomPadding = viewInsets.bottom +
+          (position == ModalPosition.bottom && viewInsets.bottom > 0 ? 8.0 : 0.0);
+
       body = _AnimatedModal(
         key: ValueKey(entry.id),
         position: position,
@@ -69,22 +77,22 @@ class _ModalStack extends StatelessWidget {
           behavior: HitTestBehavior.opaque,
           child: Container(
             color: barrierColor,
+            // The padding shrinks the alignment viewport from the bottom so
+            // the modal is laid out inside the *visible* area (above the
+            // keyboard), not behind it.
+            padding: EdgeInsets.only(bottom: bottomPadding),
             alignment: alignment,
             child: GestureDetector(
-              // Prevent taps on the modal itself from dismissing
+              // Prevent taps on the modal itself from dismissing.
               onTap: () {},
               child: SafeArea(
+                // The SafeArea should not add extra bottom inset when the
+                // keyboard is up — we've already reserved that space above.
+                bottom: viewInsets.bottom == 0,
                 child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      bottom: position == ModalPosition.bottom
-                          ? 20 + MediaQuery.viewInsetsOf(context).bottom
-                          : MediaQuery.viewInsetsOf(context).bottom,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: modalWidget,
-                    ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: modalWidget,
                   ),
                 ),
               ),

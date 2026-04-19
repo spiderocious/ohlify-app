@@ -31,10 +31,14 @@ abstract final class AppRoutes {
   static const professionals = '/professionals';
   static const call = '/call';
 
+  // Live call session: /call/session/:role/:kind/:selfId/:peerId/:sessionId
+  static const callSessionBase = '/call/session';
+
   // Onboarding / professional setup
   static const roleSelection = '/role-selection';
   static const professionalKyc = '/professional-kyc';
   static const professionalKycRates = '/professional-kyc/rates';
+  static const clientKyc = '/client-kyc';
 
   static const notifications = '/notifications';
 
